@@ -1,0 +1,12 @@
+*.args.0
+*.bc
+*.d
+*.i
+*.ii
+*.lto_wrapper_args
+*.ltrans.out
+*.ltrans_args
+*.o
+*.res
+*.s
+*.so
