@@ -8,4 +8,9 @@ add_1_896_14_14 (const float A[1][896][14][14],
                  const float B[1][896][14][14],
                  float       C[1][896][14][14]);
 
+LIB_HIDDEN extern void
+mul_1_896_14_14 (const float A[1][896][14][14],
+                 const float B[1],
+                 float       C[1][896][14][14]);
+
 #endif // ACTIVATION_H_
