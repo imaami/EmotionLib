@@ -1195,3 +1195,24 @@ func_b7ec17f0ea3 (const float A[1][2016][7][7],
 		}
 	}
 }
+
+LIB_HIDDEN void
+func_b7e2f9b2d8b (const float A[1][42][1][1],
+                  const float B[1][42][1][1],
+                  float       C[1][42][1][1])
+{
+	/* Mul
+	   shift_dir: NOT_GIVEN
+	   fmod: 0
+	 */
+	for (unsigned i0 = 0; i0 < 1; i0++) {
+		for (unsigned i1 = 0; i1 < 42; i1++) {
+			for (unsigned i2 = 0; i2 < 1; i2++) {
+				for (unsigned i3 = 0; i3 < 1; i3++) {
+					C[i0][i1][i2][i3] = A[0][i1][0][0] * B[0][i1][0][0];
+					;
+				}
+			}
+		}
+	}
+}
