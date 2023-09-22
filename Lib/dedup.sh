@@ -13,9 +13,17 @@ f=($(grep -h "^$h" fn_norm.txt \
 printf -v rgx -- '|%s' "${f[@]}"
 rgx="layer_moreNet_(${rgx:1})"
 
-{ echo; sed s/^static\ inline/LIB_HIDDEN/ \
-            "layer/${f[0]}.h"; }          \
-  >> activation.c                         &&
+sed -Ei "s/$rgx\(/layer_moreNet_${f[0]}(/" model.c
+
+{ echo;
+  sed 's/^static inline/LIB_HIDDEN/' \
+      "layer/${f[0]}.h"; } >> activation.c
+
+{ grep -B2 '^layer_moreNet' "layer/${f[0]}.h" \
+  | sed 's/^static inline/LIB_HIDDEN extern/' \
+  | head -c-1; echo ';'; } >> activation.h    &&
+sed -i '/#endif.*/d' activation.h             &&
+echo '#endif // ACTIVATION_H_' >> activation.h
 
 printf -v hdr -- 'layer/%s.h\n' "${f[@]}" &&
 echo -n "$hdr" | grep -Fvf- layer.h > tmp &&
@@ -23,5 +31,6 @@ echo -n "$hdr" | grep -Fvf- layer.h > tmp &&
 (( $(wc -l layer.h | cut -d\  -f1) > n )) &&
 mv tmp layer.h || exit 1
 
+echo -n "$hdr" | xargs git rm
 
 #echo "$rgx"
