@@ -24,7 +24,6 @@
 #include "layer/stack1_block1_deep_2_se_more_activation_truediv_2.h"
 #include "layer/stack1_block1_deep_2_se_more_activation_add.h"
 #include "layer/stack1_block1_deep_2_se_more_activation_Tanh.h"
-#include "layer/stack1_block1_deep_2_se_more_activation_Sigmoid.h"
 #include "layer/stack1_block1_deep_2_se_more_activation_mul.h"
 #include "layer/stack1_block1_deep_2_se_2_conv_BiasAdd.h"
 #include "layer/stack1_block2_deep_2_GC_conv_Conv2D.h"
