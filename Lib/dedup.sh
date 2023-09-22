@@ -23,8 +23,11 @@ sed -Ei "s/$rgx\(/$func(/" model.c && git add model.c
       "layer/${f[0]}.h"; } >> activation.c &&
 git add activation.c
 
-{ grep -B1 "^$func" activation.c | head -2 \
-  | sed -E 's/^(LIB_HIDDEN)/\1 extern/'    \
+{ sed -Ee 's/^static inline/LIB_HIDDEN extern/' \
+      -e "s/^layer_moreNet.+ *\(/$func (/"      \
+      "layer/${f[0]}.h" | head -2               \
+  | sed -Ee 's/(\(|, )float /\1float       /g'  \
+        -e 's/, /,\n                  /g'       \
   | head -c-1; echo ';'; } >> activation.h &&
 sed -i '/#endif.*/d' activation.h          &&
 printf '\n#endif // ACTIVATION_H_\n'       \
