@@ -18,10 +18,13 @@ rgx="layer_moreNet_(${rgx:1})"
 sed -Ei "s/$rgx\(/$func(/" model.c && git add model.c
 
 { echo;
-  sed -E -e 's/^static inline/LIB_HIDDEN/' \
-      -e "s/^layer_moreNet.+ *\(/$func (/" \
-      "layer/${f[0]}.h"; } >> activation.c &&
-git add activation.c
+  sed -E -e 's/^static inline/LIB_HIDDEN/'      \
+      -e "s/^layer_moreNet.+ *\(/$func (/"      \
+      "layer/${f[0]}.h" | head -2               \
+  | sed -Ee 's/(\(|, )float /\1float       /g'  \
+        -e 's/, /,\n                  /g';      \
+  tail -n+3 "layer/${f[0]}.h"; }                \
+  >> activation.c && git add activation.c
 
 { sed -Ee 's/^static inline/LIB_HIDDEN extern/' \
       -e "s/^layer_moreNet.+ *\(/$func (/"      \
