@@ -1784,3 +1784,22 @@ func_c6af25897cd (const float x[1][448][28][28],
 		}                                         /* m */
 	}                                                 /* b */
 }
+
+LIB_HIDDEN void
+func_c686cecec96 (const float X[1][2016][14][14],
+                  float       Y[1][2016][14][14])
+{
+	/* Tanh
+	   alpha = 0.00000
+	   beta = 0.00000
+	*/
+	for (unsigned i0 = 0; i0 < 1; i0++) {
+		for (unsigned i1 = 0; i1 < 2016; i1++) {
+			for (unsigned i2 = 0; i2 < 14; i2++) {
+				for (unsigned i3 = 0; i3 < 14; i3++) {
+					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
+				}
+			}
+		}
+	}
+}
