@@ -30,4 +30,10 @@ LIB_HIDDEN extern void
 tanh_1_896_14_14 (const float X[1][896][14][14],
                   float       Y[1][896][14][14]);
 
+LIB_HIDDEN extern void
+func_e0f0970f536 (const float x[1][896][14][14],
+                  const float w[896][896][1][1],
+                  const float bias[896],
+                  float       y[1][896][14][14]);
+
 #endif // ACTIVATION_H_
