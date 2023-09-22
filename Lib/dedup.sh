@@ -5,7 +5,8 @@ rm -f tmp
 h=$(grep -Eo '[[:xdigit:]]{40} +-$' \
          uniq_fn.txt) && h=${h::40} || exit 1
 func="func_${h::11}"
-
+sed -E "s/($h +)-$/\1$func/" uniq_fn.txt
+exit 0
 f=($(grep -h "^$h" fn_norm.txt \
      | cut -c49- | cut -d. -f1))
 
