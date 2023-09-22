@@ -63,7 +63,6 @@
 #include "layer/stack4_block1_deep_2_se_out_mul.h"
 #include "layer/stack4_block1_deep_3_conv_Conv2D.h"
 #include "layer/avg_pool_Mean_Squeeze__3694.h"
-#include "layer/predictions_MatMul.h"
 #include "layer/predictions_BiasAdd.h"
 #include "layer/predictions_Softmax.h"
 
