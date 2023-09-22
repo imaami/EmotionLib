@@ -1538,3 +1538,22 @@ func_f24b878e18a (const float x[1][168][56][56],
 		}                                         /* m */
 	}                                                 /* b */
 }
+
+LIB_HIDDEN void
+func_e98ea15dc69 (const float X[1][896][28][28],
+                  float       Y[1][896][28][28])
+{
+	/* Sigmoid
+	   alpha = 0.00000
+	   beta = 0.00000
+	*/
+	for (unsigned i0 = 0; i0 < 1; i0++) {
+		for (unsigned i1 = 0; i1 < 896; i1++) {
+			for (unsigned i2 = 0; i2 < 28; i2++) {
+				for (unsigned i3 = 0; i3 < 28; i3++) {
+					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+				}
+			}
+		}
+	}
+}
