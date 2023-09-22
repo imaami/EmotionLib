@@ -590,7 +590,7 @@ imageSentiment (const float tensor_input_3[1][3][224][224],
 	layer_moreNet_avg_pool_Mean_Squeeze__3694(tu0.tensor_moreNet_avg_pool_Mean_0, tensor_const_axes__3693, tu1.tensor_moreNet_avg_pool_Mean_Squeeze__3694_0);
 	func_e5bf4246f71(tu1.tensor_moreNet_avg_pool_Mean_Squeeze__3694_0, tensor_moreNet_predictions_MatMul_ReadVariableOp_0, tu0.tensor_moreNet_predictions_MatMul_0);
 	layer_moreNet_predictions_BiasAdd(tu0.tensor_moreNet_predictions_MatMul_0, tensor_moreNet_predictions_BiasAdd_ReadVariableOp_0, tu1.tensor_moreNet_predictions_BiasAdd_0);
-	layer_moreNet_predictions_Softmax(tu1.tensor_moreNet_predictions_BiasAdd_0, tensor_predictions);
+	func_c3376a8404c(tu1.tensor_moreNet_predictions_BiasAdd_0, tensor_predictions);
 }
 
 // Video inference
