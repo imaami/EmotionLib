@@ -1414,3 +1414,22 @@ func_0396437e541 (const float X[1][168][1][1],
 		}
 	}
 }
+
+LIB_HIDDEN void
+func_fe798c4b643 (const float X[1][8][1][1],
+                  float       Y[1][8][1][1])
+{
+	/* Softplus
+	   alpha = 0.00000
+	   beta = 0.00000
+	*/
+	for (unsigned i0 = 0; i0 < 1; i0++) {
+		for (unsigned i1 = 0; i1 < 8; i1++) {
+			for (unsigned i2 = 0; i2 < 1; i2++) {
+				for (unsigned i3 = 0; i3 < 1; i3++) {
+					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+				}
+			}
+		}
+	}
+}
