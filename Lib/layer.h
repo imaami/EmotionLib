@@ -43,7 +43,6 @@
 #include "layer/stack3_block1_deep_1_more_activation_mul.h"
 #include "layer/stack3_block1_deep_2_GC_conv_Conv2D.h"
 #include "layer/stack3_block1_deep_2_se_1_conv_BiasAdd.h"
-#include "layer/stack3_block1_deep_2_se_2_conv_BiasAdd.h"
 #include "layer/stack4_block1_shortcut_conv_Conv2D.h"
 #include "layer/stack4_block1_deep_1_conv_Conv2D.h"
 #include "layer/stack4_block1_deep_1_more_activation_truediv_2.h"
