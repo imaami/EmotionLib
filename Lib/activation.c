@@ -89,3 +89,20 @@ softplus_1_896_14_14 (const float X[1][896][14][14],
 		}
 	}
 }
+
+LIB_HIDDEN void
+tanh_1_896_14_14 (const float X[1][896][14][14],
+                  float       Y[1][896][14][14])
+{
+	/* Tanh
+	   alpha = 0.00000
+	   beta = 0.00000
+	*/
+	for (unsigned i1 = 0; i1 < 896; i1++) {
+		for (unsigned i2 = 0; i2 < 14; i2++) {
+			for (unsigned i3 = 0; i3 < 14; i3++) {
+				Y[0][i1][i2][i3] = tanhf(X[0][i1][i2][i3]);
+			}
+		}
+	}
+}
