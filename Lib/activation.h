@@ -318,4 +318,8 @@ func_e5bf4246f71 (const float A[1][2016],
                   const float B[2016][4],
                   float       Y[1][4]);
 
+LIB_HIDDEN extern void
+func_dbe8eb58c75 (const float X[1][2016][14][14],
+                  float       Y[1][2016][14][14]);
+
 #endif // ACTIVATION_H_
