@@ -22,4 +22,8 @@ LIB_HIDDEN extern void
 sigmoid_1_896_14_14 (const float X[1][896][14][14],
                      float       Y[1][896][14][14]);
 
+LIB_HIDDEN extern void
+softplus_1_896_14_14 (const float X[1][896][14][14],
+                      float       Y[1][896][14][14]);
+
 #endif // ACTIVATION_H_
