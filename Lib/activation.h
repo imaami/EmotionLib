@@ -175,4 +175,8 @@ LIB_HIDDEN extern void
 func_850c20b50e1 (const float X[1][112][1][1],
                   float       Y[1][112][1][1]);
 
+LIB_HIDDEN extern void
+func_59e9f807f4c (const float input[1][448][28][28],
+                  float       output[1][448][1][1]);
+
 #endif // ACTIVATION_H_
