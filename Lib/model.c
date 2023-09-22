@@ -14,7 +14,7 @@ LIB_EXPORT void
 imageSentiment (const float tensor_input_3[1][3][224][224],
                 float       tensor_predictions[1][4])
 {
-	layer_moreNet_stem_conv_Conv2D(tensor_input_3, tensor_moreNet_stem_conv_Conv2D_weights_fused_bn, tensor_moreNet_stem_conv_Conv2D_bias_fused_bn, tu1.tensor_moreNet_stem_bn_FusedBatchNormV3_0);
+	func_804a22f193b(tensor_input_3, tensor_moreNet_stem_conv_Conv2D_weights_fused_bn, tensor_moreNet_stem_conv_Conv2D_bias_fused_bn, tu1.tensor_moreNet_stem_bn_FusedBatchNormV3_0);
 	func_d6a45ad4f82(tu1.tensor_moreNet_stem_bn_FusedBatchNormV3_0, tensor_ConstantFolding_moreNet_stack3_block1_deep_2_more_activation_truediv_1_recip_0, tu0.tensor_moreNet_stem_more_activation_truediv_0);
 	func_a0025ec8222(tu0.tensor_moreNet_stem_more_activation_truediv_0, tu1.tensor_moreNet_stem_more_activation_Softplus_0);
 	layer_moreNet_stem_more_activation_add(tu0.tensor_moreNet_stem_more_activation_truediv_0, tu1.tensor_moreNet_stem_more_activation_Softplus_0, tu2.tensor_moreNet_stem_more_activation_add_0);
