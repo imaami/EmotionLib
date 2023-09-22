@@ -511,4 +511,10 @@ avg_pool_mean_squeeze (const float   input[1][2016][1][1],
                        const int64_t axes_tensor[2],
                        float         output[1][2016]);
 
+LIB_HIDDEN extern void
+func_629e2dbf06d (const float x[1][168][1][1],
+                  const float w[8][168][1][1],
+                  const float bias[8],
+                  float       y[1][8][1][1]);
+
 #endif // ACTIVATION_H_

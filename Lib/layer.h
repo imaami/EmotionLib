@@ -11,7 +11,6 @@
 #include "layer/stack1_block1_deep_1_conv_Conv2D.h"
 #include "layer/stack1_block1_deep_1_more_activation_truediv_1.h"
 #include "layer/stack1_block1_deep_1_more_activation_Softplus.h"
-#include "layer/stack1_block1_deep_2_se_1_conv_BiasAdd.h"
 #include "layer/stack1_block1_deep_2_se_more_activation_truediv_2.h"
 #include "layer/stack1_block1_deep_2_se_more_activation_add.h"
 #include "layer/stack1_block1_deep_2_se_more_activation_Tanh.h"
