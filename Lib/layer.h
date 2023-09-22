@@ -46,6 +46,5 @@
 #include "layer/stack4_block1_deep_2_se_sigmoid_Sigmoid.h"
 #include "layer/stack4_block1_deep_2_se_out_mul.h"
 #include "layer/avg_pool_Mean_Squeeze__3694.h"
-#include "layer/predictions_BiasAdd.h"
 
 #endif // LAYER_H_

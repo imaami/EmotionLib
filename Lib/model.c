@@ -589,7 +589,7 @@ imageSentiment (const float tensor_input_3[1][3][224][224],
 	func_c559a6ca992(tu1.tensor_moreNet_stack4_block1_out_more_activation_mul_0, tu0.tensor_moreNet_avg_pool_Mean_0);
 	layer_moreNet_avg_pool_Mean_Squeeze__3694(tu0.tensor_moreNet_avg_pool_Mean_0, tensor_const_axes__3693, tu1.tensor_moreNet_avg_pool_Mean_Squeeze__3694_0);
 	func_e5bf4246f71(tu1.tensor_moreNet_avg_pool_Mean_Squeeze__3694_0, tensor_moreNet_predictions_MatMul_ReadVariableOp_0, tu0.tensor_moreNet_predictions_MatMul_0);
-	layer_moreNet_predictions_BiasAdd(tu0.tensor_moreNet_predictions_MatMul_0, tensor_moreNet_predictions_BiasAdd_ReadVariableOp_0, tu1.tensor_moreNet_predictions_BiasAdd_0);
+	func_a4ec7eed693(tu0.tensor_moreNet_predictions_MatMul_0, tensor_moreNet_predictions_BiasAdd_ReadVariableOp_0, tu1.tensor_moreNet_predictions_BiasAdd_0);
 	func_c3376a8404c(tu1.tensor_moreNet_predictions_BiasAdd_0, tensor_predictions);
 }
 

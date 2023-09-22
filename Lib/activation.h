@@ -407,4 +407,9 @@ LIB_HIDDEN extern void
 func_aad79a6baee (const float X[1][896][28][28],
                   float       Y[1][896][28][28]);
 
+LIB_HIDDEN extern void
+func_a4ec7eed693 (const float A[1][4],
+                  const float B[4],
+                  float       C[1][4]);
+
 #endif // ACTIVATION_H_
