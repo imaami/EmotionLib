@@ -1,5 +1,4 @@
 #include <math.h>
-#include <stdint.h>
 
 #include "activation.h"
 
@@ -2659,5 +2658,16 @@ func_6500efa9237 (const float X[1][448][56][56],
 				}
 			}
 		}
+	}
+}
+
+LIB_HIDDEN void
+avg_pool_mean_squeeze (const float   input[1][2016][1][1],
+                       const int64_t axes_tensor[2],
+                       float         output[1][2016])
+{
+	/*Squeeze*/
+	for (int i = 0; i < 2016; i++) {
+		output[0][i] = input[0][i][0][0];
 	}
 }

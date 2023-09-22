@@ -1,6 +1,8 @@
 #ifndef ACTIVATION_H_
 #define ACTIVATION_H_
 
+#include <stdint.h>
+
 #include "common.h"
 
 LIB_HIDDEN extern void
@@ -503,5 +505,10 @@ func_672295ba075 (const float A[1][2016][14][14],
 LIB_HIDDEN extern void
 func_6500efa9237 (const float X[1][448][56][56],
                   float       Y[1][448][56][56]);
+
+LIB_HIDDEN extern void
+avg_pool_mean_squeeze (const float   input[1][2016][1][1],
+                       const int64_t axes_tensor[2],
+                       float         output[1][2016]);
 
 #endif // ACTIVATION_H_
