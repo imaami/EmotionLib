@@ -5,7 +5,6 @@
 #include <stdint.h>
 
 #include "layer/stem_conv_Conv2D.h"
-#include "layer/stem_more_activation_Softplus.h"
 #include "layer/stem_more_activation_add.h"
 #include "layer/stem_more_activation_Tanh.h"
 #include "layer/stem_more_activation_Sigmoid.h"
