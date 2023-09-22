@@ -13,6 +13,5 @@
 #include "layer/stack2_block1_deep_2_se_1_conv_BiasAdd.h"
 #include "layer/stack3_block1_deep_1_more_activation_mul.h"
 #include "layer/stack4_block1_deep_2_se_1_conv_BiasAdd.h"
-#include "layer/stack4_block1_deep_2_se_out_mul.h"
 
 #endif // LAYER_H_
