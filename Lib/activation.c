@@ -1355,3 +1355,22 @@ func_2c5bf9e3ffd (const float A[1][42][1][1],
 		}
 	}
 }
+
+LIB_HIDDEN void
+func_1d00fb8936f (const float X[1][2016][7][7],
+                  float       Y[1][2016][7][7])
+{
+	/* Sigmoid
+	   alpha = 0.00000
+	   beta = 0.00000
+	*/
+	for (unsigned i0 = 0; i0 < 1; i0++) {
+		for (unsigned i1 = 0; i1 < 2016; i1++) {
+			for (unsigned i2 = 0; i2 < 7; i2++) {
+				for (unsigned i3 = 0; i3 < 7; i3++) {
+					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+				}
+			}
+		}
+	}
+}
