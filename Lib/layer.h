@@ -4,7 +4,6 @@
 #include <math.h>
 #include <stdint.h>
 
-#include "layer/stem_more_activation_add.h"
 #include "layer/stem_more_activation_Tanh.h"
 #include "layer/stack1_block1_deep_1_more_activation_Softplus.h"
 #include "layer/stack1_block1_deep_2_se_more_activation_truediv_2.h"

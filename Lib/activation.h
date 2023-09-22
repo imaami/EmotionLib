@@ -590,4 +590,9 @@ func_1ea51fee924 (const float A[1][896][28][28],
                   const float B[1][896][28][28],
                   float       C[1][896][28][28]);
 
+LIB_HIDDEN extern void
+func_1be0e277f37 (const float A[1][32][112][112],
+                  const float B[1][32][112][112],
+                  float       C[1][32][112][112]);
+
 #endif // ACTIVATION_H_
