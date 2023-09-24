@@ -8,7 +8,7 @@ override undefine WITH_CLANG_CC
 USE_CLANG = $(eval USE_CLANG := $$(shell \
   printf '#ifdef __clang__\n1\n#endif\n' | $$(CC) -E -P -xc -))$(USE_CLANG)
 
-override BASE_CFLAGS := $(strip -flto $(SANITIZE:%=-fsanitize=%)          \
+override BASE_CFLAGS := $(strip -fPIC $(SANITIZE:%=-fsanitize=%)          \
   -O$(if $(DEBUG),$(if $(USE_CLANG),0,g) -g3,fast -DNDEBUG) -Wall -Wextra \
   $(if $(USE_CLANG),                                                      \
     -Weverything                                                          \
@@ -33,10 +33,15 @@ override EXTRA_CFLAGS := $(strip                \
     $(if $(USE_CLANG),                          \
       -Wno-constant-logical-operand             \
       -Wno-gnu-line-marker -pipe),              \
-    -pipe) $(filter-out -pipe,$(USER_CFLAGS)))
+    -pipe)                                      \
+  $(filter-out -flto -pipe,$(USER_CFLAGS)))
 else
 override undefine USER_CFLAGS
 override EXTRA_CFLAGS := -pipe
+endif
+
+ifeq (,$(filter -fno-lto,$(USER_CFLAGS)))
+override BASE_CFLAGS := -flto $(BASE_CFLAGS)
 endif
 
 override CFLAGS := $(BASE_CFLAGS) $(EXTRA_CFLAGS)
