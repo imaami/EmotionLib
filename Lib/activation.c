@@ -1779,14 +1779,14 @@ func_c3376a8404c (const float input[1][4],
 		float max = -INFINITY;
 		for (uint32_t i1 = 0; i1 < 4; i1++) {
 			max = max > input[i0][i1] ? max : input[i0][i1];
-		};
+		}
 		float sum = 0.00000;
 		for (uint32_t i1 = 0; i1 < 4; i1++) {
 			sum += expf(input[i0][i1] - max);
-		};
+		}
 		for (uint32_t i1 = 0; i1 < 4; i1++) {
 			output[i0][i1] = expf(input[i0][i1] - max) / sum;
-		};
+		}
 	}
 }
 
