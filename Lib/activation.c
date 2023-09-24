@@ -223,7 +223,7 @@ func_c558353a400 (const float X[1][448][28][28],
 		for (unsigned i1 = 0; i1 < 448; i1++) {
 			for (unsigned i2 = 0; i2 < 28; i2++) {
 				for (unsigned i3 = 0; i3 < 28; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -242,7 +242,7 @@ func_43b9e758e01 (const float X[1][448][28][28],
 		for (unsigned i1 = 0; i1 < 448; i1++) {
 			for (unsigned i2 = 0; i2 < 28; i2++) {
 				for (unsigned i3 = 0; i3 < 28; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -282,7 +282,7 @@ func_d0392d54c3d (const float X[1][896][1][1],
 		for (unsigned i1 = 0; i1 < 896; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -301,7 +301,7 @@ func_8f11a1fbb7d (const float X[1][224][1][1],
 		for (unsigned i1 = 0; i1 < 224; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -441,7 +441,7 @@ func_0a1dfd9d8eb (const float X[1][224][1][1],
 		for (unsigned i1 = 0; i1 < 224; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -653,7 +653,7 @@ func_e6848ebc170 (const float X[1][168][56][56],
 		for (unsigned i1 = 0; i1 < 168; i1++) {
 			for (unsigned i2 = 0; i2 < 56; i2++) {
 				for (unsigned i3 = 0; i3 < 56; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -672,7 +672,7 @@ func_a8fcef9491d (const float X[1][168][56][56],
 		for (unsigned i1 = 0; i1 < 168; i1++) {
 			for (unsigned i2 = 0; i2 < 56; i2++) {
 				for (unsigned i3 = 0; i3 < 56; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -752,7 +752,7 @@ func_fe391e43ecd (const float X[1][112][1][1],
 		for (unsigned i1 = 0; i1 < 112; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -771,7 +771,7 @@ func_f52c654ab60 (const float X[1][112][1][1],
 		for (unsigned i1 = 0; i1 < 112; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -811,7 +811,7 @@ func_9c5643a6f0a (const float X[1][448][1][1],
 		for (unsigned i1 = 0; i1 < 448; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -1220,7 +1220,7 @@ func_acf4d1c7f10 (const float X[1][2016][7][7],
 		for (unsigned i1 = 0; i1 < 2016; i1++) {
 			for (unsigned i2 = 0; i2 < 7; i2++) {
 				for (unsigned i3 = 0; i3 < 7; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -1260,7 +1260,7 @@ func_8e83ce12053 (const float X[1][42][1][1],
 		for (unsigned i1 = 0; i1 < 42; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -1300,7 +1300,7 @@ func_5e628592137 (const float X[1][42][1][1],
 		for (unsigned i1 = 0; i1 < 42; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -1359,7 +1359,7 @@ func_1d00fb8936f (const float X[1][2016][7][7],
 		for (unsigned i1 = 0; i1 < 2016; i1++) {
 			for (unsigned i2 = 0; i2 < 7; i2++) {
 				for (unsigned i3 = 0; i3 < 7; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -1399,7 +1399,7 @@ func_0396437e541 (const float X[1][168][1][1],
 		for (unsigned i1 = 0; i1 < 168; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -1418,7 +1418,7 @@ func_fe798c4b643 (const float X[1][8][1][1],
 		for (unsigned i1 = 0; i1 < 8; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -1437,7 +1437,7 @@ func_fa86f63a389 (const float X[1][8][1][1],
 		for (unsigned i1 = 0; i1 < 8; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -1542,7 +1542,7 @@ func_e98ea15dc69 (const float X[1][896][28][28],
 		for (unsigned i1 = 0; i1 < 896; i1++) {
 			for (unsigned i2 = 0; i2 < 28; i2++) {
 				for (unsigned i3 = 0; i3 < 28; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -1575,7 +1575,7 @@ func_dbe8eb58c75 (const float X[1][2016][14][14],
 		for (unsigned i1 = 0; i1 < 2016; i1++) {
 			for (unsigned i2 = 0; i2 < 14; i2++) {
 				for (unsigned i3 = 0; i3 < 14; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -1594,7 +1594,7 @@ func_d76e9ccfb30 (const float X[1][2016][14][14],
 		for (unsigned i1 = 0; i1 < 2016; i1++) {
 			for (unsigned i2 = 0; i2 < 14; i2++) {
 				for (unsigned i3 = 0; i3 < 14; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -1932,7 +1932,7 @@ func_bddbd765d81 (const float X[1][448][56][56],
 		for (unsigned i1 = 0; i1 < 448; i1++) {
 			for (unsigned i2 = 0; i2 < 56; i2++) {
 				for (unsigned i3 = 0; i3 < 56; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -2036,7 +2036,7 @@ func_ad146f9f484 (const float X[1][896][28][28],
 		for (unsigned i1 = 0; i1 < 896; i1++) {
 			for (unsigned i2 = 0; i2 < 28; i2++) {
 				for (unsigned i3 = 0; i3 < 28; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -2110,7 +2110,7 @@ func_a0025ec8222 (const float X[1][32][112][112],
 		for (unsigned i1 = 0; i1 < 32; i1++) {
 			for (unsigned i2 = 0; i2 < 112; i2++) {
 				for (unsigned i3 = 0; i3 < 112; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}
@@ -2172,7 +2172,7 @@ func_97b144c3b9a (const float X[1][168][112][112],
 		for (unsigned i1 = 0; i1 < 168; i1++) {
 			for (unsigned i2 = 0; i2 < 112; i2++) {
 				for (unsigned i3 = 0; i3 < 112; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -2513,7 +2513,7 @@ func_74f52a68cb0 (const float X[1][32][112][112],
 		for (unsigned i1 = 0; i1 < 32; i1++) {
 			for (unsigned i2 = 0; i2 < 112; i2++) {
 				for (unsigned i3 = 0; i3 < 112; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -2532,7 +2532,7 @@ func_743ae64fdb9 (const float X[1][448][56][56],
 		for (unsigned i1 = 0; i1 < 448; i1++) {
 			for (unsigned i2 = 0; i2 < 56; i2++) {
 				for (unsigned i3 = 0; i3 < 56; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -2594,7 +2594,7 @@ func_6a61f6e44a9 (const float X[1][2016][1][1],
 		for (unsigned i1 = 0; i1 < 2016; i1++) {
 			for (unsigned i2 = 0; i2 < 1; i2++) {
 				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + exp(-X[i0][i1][i2][i3]));
+					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
 				}
 			}
 		}
@@ -3172,7 +3172,7 @@ func_0b383856cb8 (const float X[1][168][112][112],
 		for (unsigned i1 = 0; i1 < 168; i1++) {
 			for (unsigned i2 = 0; i2 < 112; i2++) {
 				for (unsigned i3 = 0; i3 < 112; i3++) {
-					Y[i0][i1][i2][i3] = logf(exp(X[i0][i1][i2][i3]) + 1);
+					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
 				}
 			}
 		}

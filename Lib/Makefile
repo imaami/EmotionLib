@@ -1,4 +1,4 @@
-override BIN := EmotioLib.dll
+override BIN := EmotionLib.dll
 override SRC := EmotionLib.c activation.c model.c tensor.c weights.c
 override OBJ := $(SRC:%=%.o)
 override DEP := $(SRC:%=%.d)
