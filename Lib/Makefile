@@ -8,7 +8,7 @@ override undefine WITH_CLANG_CC
 USE_CLANG = $(eval USE_CLANG := $$(shell \
   printf '#ifdef __clang__\n1\n#endif\n' | $$(CC) -E -P -xc -))$(USE_CLANG)
 
-override BASE_CFLAGS := $(strip -std=c2x -flto $(SANITIZE:%=-fsanitize=%) \
+override BASE_CFLAGS := $(strip -flto $(SANITIZE:%=-fsanitize=%)          \
   -O$(if $(DEBUG),$(if $(USE_CLANG),0,g) -g3,fast -DNDEBUG) -Wall -Wextra \
   $(if $(USE_CLANG),                                                      \
     -Weverything                                                          \
