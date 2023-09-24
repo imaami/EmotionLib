@@ -1,5 +1,5 @@
-override BIN := libtest.so
-override SRC := activation.c model.c tensor.c weights.c
+override BIN := EmotioLib.dll
+override SRC := EmotionLib.c activation.c model.c tensor.c weights.c
 override OBJ := $(SRC:%=%.o)
 override DEP := $(SRC:%=%.d)
 override CC  := $(or $(if $(filter default,$(origin CC)),,$(CC)),$(if $(USE_CLANG),clang,gcc))

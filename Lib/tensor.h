@@ -1,5 +1,5 @@
-#ifndef TENSOR_H_
-#define TENSOR_H_
+#ifndef EMOTIONLIB_TENSOR_H_
+#define EMOTIONLIB_TENSOR_H_
 
 #include "common.h"
 
@@ -121,4 +121,4 @@ struct tensors {
 	union tensor_union_4 tu4;
 };
 
-#endif // TENSOR_H_
+#endif // EMOTIONLIB_TENSOR_H_
