@@ -2,7 +2,11 @@ override BIN := EmotioLib.dll
 override SRC := EmotionLib.c activation.c model.c tensor.c weights.c
 override OBJ := $(SRC:%=%.o)
 override DEP := $(SRC:%=%.d)
-override CC  := $(or $(if $(filter default,$(origin CC)),,$(CC)),$(if $(USE_CLANG),clang,gcc))
+override CC  := $(or $(if $(filter default,$(origin CC)),,$(CC)),gcc)
+
+override undefine WITH_CLANG_CC
+USE_CLANG = $(eval USE_CLANG := $$(shell \
+  printf '#ifdef __clang__\n1\n#endif\n' | $$(CC) -E -P -xc -))$(USE_CLANG)
 
 override BASE_CFLAGS := $(strip -std=c2x -flto $(SANITIZE:%=-fsanitize=%) \
   -O$(if $(DEBUG),$(if $(USE_CLANG),0,g) -g3,fast -DNDEBUG) -Wall -Wextra \
