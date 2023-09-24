@@ -506,36 +506,32 @@ func_8c9c2b9a537 (const float x[1][896][14][14],
 	 * pads: 1 1 1 1
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		uint32_t go = 56; // output group size, i.e. maps/group
-		uint32_t gi = 56; // inptput group size, i.e. channels/group
-		for (uint32_t g = 0; g < 16; g++) {
-			for (uint32_t m = go * g; m < go * (g + 1); m++) {
-				for (int32_t o0 = 0, i0 = -1; o0 < 14; o0++, i0 += 1) {
-					for (int32_t o1 = 0, i1 = -1; o1 < 14; o1++, i1 += 1) {
-						y[b][m][o0][o1] = bias[m];
-						for (int32_t c = gi * g; c < gi * (g + 1); c++) {
-							for (uint32_t k0 = 0; k0 < 3; k0++) {
-								for (uint32_t k1 = 0; k1 < 3; k1++) {
-									int ii0 = i0 + k0 * 1;
-									if (ii0 < 0)
-										continue;
-									if (ii0 >= 14)
-										continue;
-									int ii1 = i1 + k1 * 1;
-									if (ii1 < 0)
-										continue;
-									if (ii1 >= 14)
-										continue;
-									y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c - (gi * g)][k0][k1];
-								} /* k */
-							}         /* k */
-						}                 /* c */
-					}                         /* o */
-				}                                 /* o */
-			}                                         /* m */
-		}                                                 /* g */
-	}                                                         /* b */
+	for (int g = 0; g < 16; g++) {
+		for (int m = 56 * g; m < 56 * (g + 1); m++) {
+			for (int o0 = 0, i0 = -1; o0 < 14; o0++, i0 += 1) {
+				for (int o1 = 0, i1 = -1; o1 < 14; o1++, i1 += 1) {
+					y[0][m][o0][o1] = bias[m];
+					for (int c = 56 * g; c < 56 * (g + 1); c++) {
+						for (int k0 = 0; k0 < 3; k0++) {
+							for (int k1 = 0; k1 < 3; k1++) {
+								int ii0 = i0 + k0 * 1;
+								if (ii0 < 0)
+									continue;
+								if (ii0 >= 14)
+									continue;
+								int ii1 = i1 + k1 * 1;
+								if (ii1 < 0)
+									continue;
+								if (ii1 >= 14)
+									continue;
+								y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c - (56 * g)][k0][k1];
+							} /* k */
+						}         /* k */
+					}                 /* c */
+				}                         /* o */
+			}                                 /* o */
+		}                                         /* m */
+	}                                                 /* g */
 }
 
 LIB_HIDDEN void
@@ -937,36 +933,32 @@ func_c2f45289b07 (const float x[1][448][28][28],
 	 * pads: 1 1 1 1
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		uint32_t go = 56; // output group size, i.e. maps/group
-		uint32_t gi = 56; // inptput group size, i.e. channels/group
-		for (uint32_t g = 0; g < 8; g++) {
-			for (uint32_t m = go * g; m < go * (g + 1); m++) {
-				for (int32_t o0 = 0, i0 = -1; o0 < 28; o0++, i0 += 1) {
-					for (int32_t o1 = 0, i1 = -1; o1 < 28; o1++, i1 += 1) {
-						y[b][m][o0][o1] = bias[m];
-						for (int32_t c = gi * g; c < gi * (g + 1); c++) {
-							for (uint32_t k0 = 0; k0 < 3; k0++) {
-								for (uint32_t k1 = 0; k1 < 3; k1++) {
-									int ii0 = i0 + k0 * 1;
-									if (ii0 < 0)
-										continue;
-									if (ii0 >= 28)
-										continue;
-									int ii1 = i1 + k1 * 1;
-									if (ii1 < 0)
-										continue;
-									if (ii1 >= 28)
-										continue;
-									y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c - (gi * g)][k0][k1];
-								} /* k */
-							}         /* k */
-						}                 /* c */
-					}                         /* o */
-				}                                 /* o */
-			}                                         /* m */
-		}                                                 /* g */
-	}                                                         /* b */
+	for (int g = 0; g < 8; g++) {
+		for (int m = 56 * g; m < 56 * (g + 1); m++) {
+			for (int o0 = 0, i0 = -1; o0 < 28; o0++, i0 += 1) {
+				for (int o1 = 0, i1 = -1; o1 < 28; o1++, i1 += 1) {
+					y[0][m][o0][o1] = bias[m];
+					for (int c = 56 * g; c < 56 * (g + 1); c++) {
+						for (int k0 = 0; k0 < 3; k0++) {
+							for (int k1 = 0; k1 < 3; k1++) {
+								int ii0 = i0 + k0 * 1;
+								if (ii0 < 0)
+									continue;
+								if (ii0 >= 28)
+									continue;
+								int ii1 = i1 + k1 * 1;
+								if (ii1 < 0)
+									continue;
+								if (ii1 >= 28)
+									continue;
+								y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c - (56 * g)][k0][k1];
+							} /* k */
+						}         /* k */
+					}                 /* c */
+				}                         /* o */
+			}                                 /* o */
+		}                                         /* m */
+	}                                                 /* g */
 }
 
 LIB_HIDDEN void
@@ -1709,36 +1701,32 @@ func_ce6378ecf4f (const float x[1][2016][14][14],
 	 * pads: 1 1 1 1
 	 * strides: 2 2
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		uint32_t go = 56; // output group size, i.e. maps/group
-		uint32_t gi = 56; // inptput group size, i.e. channels/group
-		for (uint32_t g = 0; g < 36; g++) {
-			for (uint32_t m = go * g; m < go * (g + 1); m++) {
-				for (int32_t o0 = 0, i0 = -1; o0 < 7; o0++, i0 += 2) {
-					for (int32_t o1 = 0, i1 = -1; o1 < 7; o1++, i1 += 2) {
-						y[b][m][o0][o1] = bias[m];
-						for (int32_t c = gi * g; c < gi * (g + 1); c++) {
-							for (uint32_t k0 = 0; k0 < 3; k0++) {
-								for (uint32_t k1 = 0; k1 < 3; k1++) {
-									int ii0 = i0 + k0 * 1;
-									if (ii0 < 0)
-										continue;
-									if (ii0 >= 14)
-										continue;
-									int ii1 = i1 + k1 * 1;
-									if (ii1 < 0)
-										continue;
-									if (ii1 >= 14)
-										continue;
-									y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c - (gi * g)][k0][k1];
-								} /* k */
-							}         /* k */
-						}                 /* c */
-					}                         /* o */
-				}                                 /* o */
-			}                                         /* m */
-		}                                                 /* g */
-	}                                                         /* b */
+	for (int g = 0; g < 36; g++) {
+		for (int m = 56 * g; m < 56 * (g + 1); m++) {
+			for (int o0 = 0, i0 = -1; o0 < 7; o0++, i0 += 2) {
+				for (int o1 = 0, i1 = -1; o1 < 7; o1++, i1 += 2) {
+					y[0][m][o0][o1] = bias[m];
+					for (int c = 56 * g; c < 56 * (g + 1); c++) {
+						for (int k0 = 0; k0 < 3; k0++) {
+							for (int k1 = 0; k1 < 3; k1++) {
+								int ii0 = i0 + k0 * 1;
+								if (ii0 < 0)
+									continue;
+								if (ii0 >= 14)
+									continue;
+								int ii1 = i1 + k1 * 1;
+								if (ii1 < 0)
+									continue;
+								if (ii1 >= 14)
+									continue;
+								y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c - (56 * g)][k0][k1];
+							} /* k */
+						}         /* k */
+					}                 /* c */
+				}                         /* o */
+			}                                 /* o */
+		}                                         /* m */
+	}                                                 /* g */
 }
 
 LIB_HIDDEN void
@@ -2270,36 +2258,32 @@ func_8e2441e0d80 (const float x[1][896][28][28],
 	 * pads: 1 1 1 1
 	 * strides: 2 2
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		uint32_t go = 56; // output group size, i.e. maps/group
-		uint32_t gi = 56; // inptput group size, i.e. channels/group
-		for (uint32_t g = 0; g < 16; g++) {
-			for (uint32_t m = go * g; m < go * (g + 1); m++) {
-				for (int32_t o0 = 0, i0 = -1; o0 < 14; o0++, i0 += 2) {
-					for (int32_t o1 = 0, i1 = -1; o1 < 14; o1++, i1 += 2) {
-						y[b][m][o0][o1] = bias[m];
-						for (int32_t c = gi * g; c < gi * (g + 1); c++) {
-							for (uint32_t k0 = 0; k0 < 3; k0++) {
-								for (uint32_t k1 = 0; k1 < 3; k1++) {
-									int ii0 = i0 + k0 * 1;
-									if (ii0 < 0)
-										continue;
-									if (ii0 >= 28)
-										continue;
-									int ii1 = i1 + k1 * 1;
-									if (ii1 < 0)
-										continue;
-									if (ii1 >= 28)
-										continue;
-									y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c - (gi * g)][k0][k1];
-								} /* k */
-							}         /* k */
-						}                 /* c */
-					}                         /* o */
-				}                                 /* o */
-			}                                         /* m */
-		}                                                 /* g */
-	}                                                         /* b */
+	for (int g = 0; g < 16; g++) {
+		for (int m = 56 * g; m < 56 * (g + 1); m++) {
+			for (int o0 = 0, i0 = -1; o0 < 14; o0++, i0 += 2) {
+				for (int o1 = 0, i1 = -1; o1 < 14; o1++, i1 += 2) {
+					y[0][m][o0][o1] = bias[m];
+					for (int c = 56 * g; c < 56 * (g + 1); c++) {
+						for (int k0 = 0; k0 < 3; k0++) {
+							for (int k1 = 0; k1 < 3; k1++) {
+								int ii0 = i0 + k0 * 1;
+								if (ii0 < 0)
+									continue;
+								if (ii0 >= 28)
+									continue;
+								int ii1 = i1 + k1 * 1;
+								if (ii1 < 0)
+									continue;
+								if (ii1 >= 28)
+									continue;
+								y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c - (56 * g)][k0][k1];
+							} /* k */
+						}         /* k */
+					}                 /* c */
+				}                         /* o */
+			}                                 /* o */
+		}                                         /* m */
+	}                                                 /* g */
 }
 
 LIB_HIDDEN void
@@ -2489,36 +2473,32 @@ func_7672188cb32 (const float x[1][168][112][112],
 	 * pads: 1 1 1 1
 	 * strides: 2 2
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		uint32_t go = 56; // output group size, i.e. maps/group
-		uint32_t gi = 56; // inptput group size, i.e. channels/group
-		for (uint32_t g = 0; g < 3; g++) {
-			for (uint32_t m = go * g; m < go * (g + 1); m++) {
-				for (int32_t o0 = 0, i0 = -1; o0 < 56; o0++, i0 += 2) {
-					for (int32_t o1 = 0, i1 = -1; o1 < 56; o1++, i1 += 2) {
-						y[b][m][o0][o1] = bias[m];
-						for (int32_t c = gi * g; c < gi * (g + 1); c++) {
-							for (uint32_t k0 = 0; k0 < 3; k0++) {
-								for (uint32_t k1 = 0; k1 < 3; k1++) {
-									int ii0 = i0 + k0 * 1;
-									if (ii0 < 0)
-										continue;
-									if (ii0 >= 112)
-										continue;
-									int ii1 = i1 + k1 * 1;
-									if (ii1 < 0)
-										continue;
-									if (ii1 >= 112)
-										continue;
-									y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c - (gi * g)][k0][k1];
-								} /* k */
-							}         /* k */
-						}                 /* c */
-					}                         /* o */
-				}                                 /* o */
-			}                                         /* m */
-		}                                                 /* g */
-	}                                                         /* b */
+	for (int g = 0; g < 3; g++) {
+		for (int m = 56 * g; m < 56 * (g + 1); m++) {
+			for (int o0 = 0, i0 = -1; o0 < 56; o0++, i0 += 2) {
+				for (int o1 = 0, i1 = -1; o1 < 56; o1++, i1 += 2) {
+					y[0][m][o0][o1] = bias[m];
+					for (int c = 56 * g; c < 56 * (g + 1); c++) {
+						for (int k0 = 0; k0 < 3; k0++) {
+							for (int k1 = 0; k1 < 3; k1++) {
+								int ii0 = i0 + k0 * 1;
+								if (ii0 < 0)
+									continue;
+								if (ii0 >= 112)
+									continue;
+								int ii1 = i1 + k1 * 1;
+								if (ii1 < 0)
+									continue;
+								if (ii1 >= 112)
+									continue;
+								y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c - (56 * g)][k0][k1];
+							} /* k */
+						}         /* k */
+					}                 /* c */
+				}                         /* o */
+			}                                 /* o */
+		}                                         /* m */
+	}                                                 /* g */
 }
 
 LIB_HIDDEN void
@@ -2663,7 +2643,7 @@ func_6500efa9237 (const float X[1][448][56][56],
 
 LIB_HIDDEN void
 avg_pool_mean_squeeze (const float   input[1][2016][1][1],
-                       const int64_t axes_tensor[2],
+                       const int64_t axes_tensor[2] __attribute__((unused)),
                        float         output[1][2016])
 {
 	/*Squeeze*/
@@ -2961,36 +2941,32 @@ func_2eb9726b206 (const float x[1][448][56][56],
 	 * pads: 1 1 1 1
 	 * strides: 2 2
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		uint32_t go = 56; // output group size, i.e. maps/group
-		uint32_t gi = 56; // inptput group size, i.e. channels/group
-		for (uint32_t g = 0; g < 8; g++) {
-			for (uint32_t m = go * g; m < go * (g + 1); m++) {
-				for (int32_t o0 = 0, i0 = -1; o0 < 28; o0++, i0 += 2) {
-					for (int32_t o1 = 0, i1 = -1; o1 < 28; o1++, i1 += 2) {
-						y[b][m][o0][o1] = bias[m];
-						for (int32_t c = gi * g; c < gi * (g + 1); c++) {
-							for (uint32_t k0 = 0; k0 < 3; k0++) {
-								for (uint32_t k1 = 0; k1 < 3; k1++) {
-									int ii0 = i0 + k0 * 1;
-									if (ii0 < 0)
-										continue;
-									if (ii0 >= 56)
-										continue;
-									int ii1 = i1 + k1 * 1;
-									if (ii1 < 0)
-										continue;
-									if (ii1 >= 56)
-										continue;
-									y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c - (gi * g)][k0][k1];
-								} /* k */
-							}         /* k */
-						}                 /* c */
-					}                         /* o */
-				}                                 /* o */
-			}                                         /* m */
-		}                                                 /* g */
-	}                                                         /* b */
+	for (int g = 0; g < 8; g++) {
+		for (int m = 56 * g; m < 56 * (g + 1); m++) {
+			for (int o0 = 0, i0 = -1; o0 < 28; o0++, i0 += 2) {
+				for (int o1 = 0, i1 = -1; o1 < 28; o1++, i1 += 2) {
+					y[0][m][o0][o1] = bias[m];
+					for (int c = 56 * g; c < 56 * (g + 1); c++) {
+						for (int k0 = 0; k0 < 3; k0++) {
+							for (int k1 = 0; k1 < 3; k1++) {
+								int ii0 = i0 + k0 * 1;
+								if (ii0 < 0)
+									continue;
+								if (ii0 >= 56)
+									continue;
+								int ii1 = i1 + k1 * 1;
+								if (ii1 < 0)
+									continue;
+								if (ii1 >= 56)
+									continue;
+								y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c - (56 * g)][k0][k1];
+							} /* k */
+						}         /* k */
+					}                 /* c */
+				}                         /* o */
+			}                                 /* o */
+		}                                         /* m */
+	}                                                 /* g */
 }
 
 LIB_HIDDEN void
@@ -3301,34 +3277,30 @@ func_024f701e4f6 (const float x[1][168][56][56],
 	 * pads: 1 1 1 1
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		uint32_t go = 56; // output group size, i.e. maps/group
-		uint32_t gi = 56; // inptput group size, i.e. channels/group
-		for (uint32_t g = 0; g < 3; g++) {
-			for (uint32_t m = go * g; m < go * (g + 1); m++) {
-				for (int32_t o0 = 0, i0 = -1; o0 < 56; o0++, i0 += 1) {
-					for (int32_t o1 = 0, i1 = -1; o1 < 56; o1++, i1 += 1) {
-						y[b][m][o0][o1] = bias[m];
-						for (int32_t c = gi * g; c < gi * (g + 1); c++) {
-							for (uint32_t k0 = 0; k0 < 3; k0++) {
-								for (uint32_t k1 = 0; k1 < 3; k1++) {
-									int ii0 = i0 + k0 * 1;
-									if (ii0 < 0)
-										continue;
-									if (ii0 >= 56)
-										continue;
-									int ii1 = i1 + k1 * 1;
-									if (ii1 < 0)
-										continue;
-									if (ii1 >= 56)
-										continue;
-									y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c - (gi * g)][k0][k1];
-								} /* k */
-							}         /* k */
-						}                 /* c */
-					}                         /* o */
-				}                                 /* o */
-			}                                         /* m */
-		}                                                 /* g */
-	}                                                         /* b */
+	for (int g = 0; g < 3; g++) {
+		for (int m = 56 * g; m < 56 * (g + 1); m++) {
+			for (int o0 = 0, i0 = -1; o0 < 56; o0++, i0 += 1) {
+				for (int o1 = 0, i1 = -1; o1 < 56; o1++, i1 += 1) {
+					y[0][m][o0][o1] = bias[m];
+					for (int c = 56 * g; c < 56 * (g + 1); c++) {
+						for (int k0 = 0; k0 < 3; k0++) {
+							for (int k1 = 0; k1 < 3; k1++) {
+								int ii0 = i0 + k0 * 1;
+								if (ii0 < 0)
+									continue;
+								if (ii0 >= 56)
+									continue;
+								int ii1 = i1 + k1 * 1;
+								if (ii1 < 0)
+									continue;
+								if (ii1 >= 56)
+									continue;
+								y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c - (56 * g)][k0][k1];
+							} /* k */
+						}         /* k */
+					}                 /* c */
+				}                         /* o */
+			}                                 /* o */
+		}                                         /* m */
+	}                                                 /* g */
 }
