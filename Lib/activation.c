@@ -7,14 +7,28 @@ add_1_896_14_14 (const float A[1][896][14][14],
                  const float B[1][896][14][14],
                  float       C[1][896][14][14])
 {
-	/* Add
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] + B[0][i][j][k];
+			}
+		}
+	}
+}
+
+LIB_HIDDEN void
+fold_1_896_14_14 (const float A[1][896][14][14],
+                  const float B[1],
+                  float       C[1][896][14][14])
+{
+	/* Mul
 	   shift_dir: NOT_GIVEN
 	   fmod: 0
 	 */
-	for (unsigned i1 = 0; i1 < 896; i1++) {
-		for (unsigned i2 = 0; i2 < 14; i2++) {
-			for (unsigned i3 = 0; i3 < 14; i3++) {
-				C[0][i1][i2][i3] = A[0][i1][i2][i3] + B[0][i1][i2][i3];
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] * B[0];
 			}
 		}
 	}
@@ -22,26 +36,8 @@ add_1_896_14_14 (const float A[1][896][14][14],
 
 LIB_HIDDEN void
 mul_1_896_14_14 (const float A[1][896][14][14],
-                 const float B[1],
+                 const float B[1][896][14][14],
                  float       C[1][896][14][14])
-{
-	/* Mul
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i1 = 0; i1 < 896; i1++) {
-		for (unsigned i2 = 0; i2 < 14; i2++) {
-			for (unsigned i3 = 0; i3 < 14; i3++) {
-				C[0][i1][i2][i3] = A[0][i1][i2][i3] * B[0];
-			}
-		}
-	}
-}
-
-LIB_HIDDEN void
-mul2_1_896_14_14 (const float A[1][896][14][14],
-                  const float B[1][896][14][14],
-                  float       C[1][896][14][14])
 {
 	/* Mul
 	   shift_dir: NOT_GIVEN
@@ -64,10 +60,10 @@ sigmoid_1_896_14_14 (const float X[1][896][14][14],
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i1 = 0; i1 < 896; i1++) {
-		for (unsigned i2 = 0; i2 < 14; i2++) {
-			for (unsigned i3 = 0; i3 < 14; i3++) {
-				Y[0][i1][i2][i3] = 1.0f / (1.0f + expf(-X[0][i1][i2][i3]));
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = 1.0f / (1.0f + expf(-X[0][i][j][k]));
 			}
 		}
 	}
@@ -77,14 +73,10 @@ LIB_HIDDEN void
 softplus_1_896_14_14 (const float X[1][896][14][14],
                       float       Y[1][896][14][14])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i1 = 0; i1 < 896; i1++) {
-		for (unsigned i2 = 0; i2 < 14; i2++) {
-			for (unsigned i3 = 0; i3 < 14; i3++) {
-				Y[0][i1][i2][i3] = logf(expf(X[0][i1][i2][i3]) + 1.0f);
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = logf(expf(X[0][i][j][k]) + 1.0f);
 			}
 		}
 	}
@@ -94,24 +86,20 @@ LIB_HIDDEN void
 tanh_1_896_14_14 (const float X[1][896][14][14],
                   float       Y[1][896][14][14])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i1 = 0; i1 < 896; i1++) {
-		for (unsigned i2 = 0; i2 < 14; i2++) {
-			for (unsigned i3 = 0; i3 < 14; i3++) {
-				Y[0][i1][i2][i3] = tanhf(X[0][i1][i2][i3]);
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = tanhf(X[0][i][j][k]);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_e0f0970f536 (const float x[1][896][14][14],
-                  const float w[896][896][1][1],
-                  const float bias[896],
-                  float       y[1][896][14][14])
+conv_1_896_14_14_w896_896_1_1_y1_896_14_14 (const float x[1][896][14][14],
+                                            const float w[896][896][1][1],
+                                            const float bias[896],
+                                            float       y[1][896][14][14])
 {
 	/* Conv
 	 *
@@ -122,49 +110,27 @@ func_e0f0970f536 (const float x[1][896][14][14],
 	 * pads: 0 0 0 0
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		for (uint32_t m = 0; m < 896; m++) {
-			for (int32_t o0 = 0, i0 = 0; o0 < 14; o0++, i0 += 1) {
-				for (int32_t o1 = 0, i1 = 0; o1 < 14; o1++, i1 += 1) {
-					y[b][m][o0][o1] = bias[m];
-					for (int32_t c = 0; c < 896; c++) {
-						for (uint32_t k0 = 0; k0 < 1; k0++) {
-							for (uint32_t k1 = 0; k1 < 1; k1++) {
-								int ii0 = i0 + k0 * 1;
-								if (ii0 < 0)
-									continue;
-								if (ii0 >= 14)
-									continue;
-								int ii1 = i1 + k1 * 1;
-								if (ii1 < 0)
-									continue;
-								if (ii1 >= 14)
-									continue;
-								y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c][k0][k1];
-							} /* k */
-						}         /* k */
-					}                 /* c */
-				}                         /* o */
-			}                                 /* o */
-		}                                         /* m */
-	}                                                 /* b */
+	for (unsigned m = 0; m < sizeof y[0] / sizeof y[0][0]; m++) {
+		for (int o0 = 0; o0 < 14; o0++) {
+			for (int o1 = 0; o1 < 14; o1++) {
+				y[0][m][o0][o1] = bias[m];
+				for (int c = 0; c < 896; c++) {
+					y[0][m][o0][o1] += x[0][c][o0][o1] * w[m][c][0][0];
+				} /* c */
+			}         /* o */
+		}                 /* o */
+	}                         /* m */
 }
 
 LIB_HIDDEN void
-func_c1c0d1ba7d5 (const float A[1][448][28][28],
-                  const float B[1][448][28][28],
-                  float       C[1][448][28][28])
+add_1_448_28_28 (const float A[1][448][28][28],
+                 const float B[1][448][28][28],
+                 float       C[1][448][28][28])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 448; i1++) {
-			for (unsigned i2 = 0; i2 < 28; i2++) {
-				for (unsigned i3 = 0; i3 < 28; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][i2][i3] + B[0][i1][i2][i3];
-				}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] + B[0][i][j][k];
 			}
 		}
 	}
@@ -191,64 +157,50 @@ func_fe352416748 (const float A[1][448][28][28],
 }
 
 LIB_HIDDEN void
-func_f71959ee7d8 (const float X[1][448][28][28],
+tanh_1_448_28_28 (const float X[1][448][28][28],
                   float       Y[1][448][28][28])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 448; i1++) {
-			for (unsigned i2 = 0; i2 < 28; i2++) {
-				for (unsigned i3 = 0; i3 < 28; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = tanhf(X[0][i][j][k]);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_c558353a400 (const float X[1][448][28][28],
-                  float       Y[1][448][28][28])
+softplus_1_448_28_28 (const float X[1][448][28][28],
+                      float       Y[1][448][28][28])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 448; i1++) {
-			for (unsigned i2 = 0; i2 < 28; i2++) {
-				for (unsigned i3 = 0; i3 < 28; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = logf(expf(X[0][i][j][k]) + 1.0f);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_43b9e758e01 (const float X[1][448][28][28],
-                  float       Y[1][448][28][28])
+sigmoid_1_448_28_28 (const float X[1][448][28][28],
+                     float       Y[1][448][28][28])
 {
 	/* Sigmoid
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 448; i1++) {
-			for (unsigned i2 = 0; i2 < 28; i2++) {
-				for (unsigned i3 = 0; i3 < 28; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
+	for (unsigned i = 0; i < sizeof Y[0] / sizeof Y[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof Y[0][0] / sizeof Y[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof Y[0][0][0] / sizeof Y[0][0][0][0]; k++) {
+				Y[0][i][j][k] = 1.0f / (1.0f + expf(-X[0][i][j][k]));
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_348d0734aa0 (const float A[1][448][28][28],
+fold_1_448_28_28 (const float A[1][448][28][28],
                   const float B[1],
                   float       C[1][448][28][28])
 {
@@ -268,60 +220,38 @@ func_348d0734aa0 (const float A[1][448][28][28],
 }
 
 LIB_HIDDEN void
-func_d0392d54c3d (const float X[1][896][1][1],
-                  float       Y[1][896][1][1])
+sigmoid_1_896_1_1 (const float X[1][896][1][1],
+                   float       Y[1][896][1][1])
 {
 	/* Sigmoid
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 896; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
-			}
-		}
+	for (unsigned i1 = 0; i1 < sizeof Y[0] / sizeof Y[0][0]; i1++) {
+		Y[0][i1][0][0] = 1.0f / (1.0f + expf(-X[0][i1][0][0]));
 	}
 }
 
 LIB_HIDDEN void
-func_8f11a1fbb7d (const float X[1][224][1][1],
-                  float       Y[1][224][1][1])
+sigmoid_1_224_1_1 (const float X[1][224][1][1],
+                   float       Y[1][224][1][1])
 {
 	/* Sigmoid
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 224; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		Y[0][i][0][0] = 1.0f / (1.0f + expf(-X[0][i][0][0]));
 	}
 }
 
 LIB_HIDDEN void
-func_83eedcc347c (const float A[1][224][1][1],
-                  const float B[1][224][1][1],
-                  float       C[1][224][1][1])
+add_1_224_1_1 (const float A[1][224][1][1],
+               const float B[1][224][1][1],
+               float       C[1][224][1][1])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 224; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][0][0] + B[0][i1][0][0];
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		C[0][i][0][0] = A[0][i][0][0] + B[0][i][0][0];
 	}
 }
 
@@ -346,9 +276,9 @@ func_7637f5931c0 (const float A[1][896][14][14],
 }
 
 LIB_HIDDEN void
-func_630fd67a50d (const float A[1][224][1][1],
-                  const float B[1],
-                  float       C[1][224][1][1])
+fold_1_224_1_1 (const float A[1][224][1][1],
+                const float B[1],
+                float       C[1][224][1][1])
 {
 	/* Mul
 	   shift_dir: NOT_GIVEN
@@ -366,20 +296,19 @@ func_630fd67a50d (const float A[1][224][1][1],
 }
 
 LIB_HIDDEN void
-func_588505254d8 (const float input[1][896][14][14],
-                  float       output[1][896][1][1])
+avgpool_1_896_14_14 (const float in[1][896][14][14],
+                     float       out[1][896][1][1])
 {
 	/* GlobalAveragePool */
-	for (int32_t b = 0; b < 1; b++) {
-		for (int32_t c = 0; c < 896; c++) {
-			float dimsum = 0.00000f;
-			for (int32_t d0 = 0; d0 < 14; d0++) {
-				for (int32_t d1 = 0; d1 < 14; d1++) {
-					dimsum += input[b][c][d0][d1];
-				}
+	for (unsigned c = 0; c < sizeof in[0] / sizeof in[0][0]; c++) {
+		float dimsum = 0.0f;
+		for (unsigned d0 = 0; d0 < sizeof in[0][0] / sizeof in[0][0][0]; d0++) {
+			for (unsigned d1 = 0; d1 < sizeof in[0][0][0] / sizeof in[0][0][0][0]; d1++) {
+				dimsum += in[0][c][d0][d1];
 			}
-			output[b][c][0][0] = dimsum / 196;
 		}
+		out[0][c][0][0] = dimsum / (float)((sizeof in[0][0]    / sizeof in[0][0][0]) *
+		                                   (sizeof in[0][0][0] / sizeof in[0][0][0][0]));
 	}
 }
 
@@ -404,40 +333,20 @@ func_3fd747a7427 (const float A[1][224][1][1],
 }
 
 LIB_HIDDEN void
-func_0e8e856c2fe (const float X[1][224][1][1],
-                  float       Y[1][224][1][1])
+tanh_1_224_1_1 (const float X[1][224][1][1],
+                float       Y[1][224][1][1])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 224; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		Y[0][i][0][0] = tanhf(X[0][i][0][0]);
 	}
 }
 
 LIB_HIDDEN void
-func_0a1dfd9d8eb (const float X[1][224][1][1],
-                  float       Y[1][224][1][1])
+softplus_1_224_1_1 (const float X[1][224][1][1],
+                    float       Y[1][224][1][1])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 224; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		Y[0][i][0][0] = logf(expf(X[0][i][0][0]) + 1.0f);
 	}
 }
 
@@ -614,39 +523,27 @@ func_d83947690c8 (const float x[1][448][28][28],
 }
 
 LIB_HIDDEN void
-func_01ab67f7680 (const float A[1][168][56][56],
-                  const float B[1][168][56][56],
-                  float       C[1][168][56][56])
+add_1_168_56_56 (const float A[1][168][56][56],
+                 const float B[1][168][56][56],
+                 float       C[1][168][56][56])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 168; i1++) {
-			for (unsigned i2 = 0; i2 < 56; i2++) {
-				for (unsigned i3 = 0; i3 < 56; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][i2][i3] + B[0][i1][i2][i3];
-				}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] + B[0][i][j][k];
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_e6848ebc170 (const float X[1][168][56][56],
-                  float       Y[1][168][56][56])
+softplus_1_168_56_56 (const float X[1][168][56][56],
+                      float       Y[1][168][56][56])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 168; i1++) {
-			for (unsigned i2 = 0; i2 < 56; i2++) {
-				for (unsigned i3 = 0; i3 < 56; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = logf(expf(X[0][i][j][k]) + 1.0f);
 			}
 		}
 	}
@@ -660,12 +557,10 @@ func_a8fcef9491d (const float X[1][168][56][56],
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 168; i1++) {
-			for (unsigned i2 = 0; i2 < 56; i2++) {
-				for (unsigned i3 = 0; i3 < 56; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
+	for (unsigned i1 = 0; i1 < 168; i1++) {
+		for (unsigned i2 = 0; i2 < 56; i2++) {
+			for (unsigned i3 = 0; i3 < 56; i3++) {
+				Y[0][i1][i2][i3] = 1.0f / (1.0f + expf(-X[0][i1][i2][i3]));
 			}
 		}
 	}
@@ -680,38 +575,30 @@ func_7ae0037bce3 (const float A[1][168][56][56],
 	   shift_dir: NOT_GIVEN
 	   fmod: 0
 	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 168; i1++) {
-			for (unsigned i2 = 0; i2 < 56; i2++) {
-				for (unsigned i3 = 0; i3 < 56; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][i2][i3] * B[0][i1][i2][i3];
-				}
+	for (unsigned i1 = 0; i1 < 168; i1++) {
+		for (unsigned i2 = 0; i2 < 56; i2++) {
+			for (unsigned i3 = 0; i3 < 56; i3++) {
+				C[0][i1][i2][i3] = A[0][i1][i2][i3] * B[0][i1][i2][i3];
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_37d72843087 (const float X[1][168][56][56],
+tanh_1_168_56_56 (const float X[1][168][56][56],
                   float       Y[1][168][56][56])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 168; i1++) {
-			for (unsigned i2 = 0; i2 < 56; i2++) {
-				for (unsigned i3 = 0; i3 < 56; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = tanhf(X[0][i][j][k]);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_1b6d698ef43 (const float A[1][168][56][56],
+fold_1_168_56_56 (const float A[1][168][56][56],
                   const float B[1],
                   float       C[1][168][56][56])
 {
@@ -738,53 +625,27 @@ func_fe391e43ecd (const float X[1][112][1][1],
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 112; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
-			}
-		}
+	for (unsigned i1 = 0; i1 < sizeof Y[0] / sizeof Y[0][0]; i1++) {
+		Y[0][i1][0][0] = 1.0f / (1.0f + expf(-X[0][i1][0][0]));
 	}
 }
 
 LIB_HIDDEN void
-func_f52c654ab60 (const float X[1][112][1][1],
-                  float       Y[1][112][1][1])
+softplus_1_112_1_1 (const float X[1][112][1][1],
+                    float       Y[1][112][1][1])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 112; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		Y[0][i][0][0] = logf(expf(X[0][i][0][0]) + 1.0f);
 	}
 }
 
 LIB_HIDDEN void
-func_f2fe9c06a98 (const float A[1][112][1][1],
-                  const float B[1][112][1][1],
-                  float       C[1][112][1][1])
+add_1_112_1_1 (const float A[1][112][1][1],
+               const float B[1][112][1][1],
+               float       C[1][112][1][1])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 112; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][0][0] + B[0][i1][0][0];
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		C[0][i][0][0] = A[0][i][0][0] + B[0][i][0][0];
 	}
 }
 
@@ -796,51 +657,34 @@ func_9c5643a6f0a (const float X[1][448][1][1],
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 448; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
-			}
-		}
+	for (unsigned i1 = 0; i1 < sizeof Y[0] / sizeof Y[0][0]; i1++) {
+		Y[0][i1][0][0] = 1.0f / (1.0f + expf(-X[0][i1][0][0]));
 	}
 }
 
 LIB_HIDDEN void
-func_850c20b50e1 (const float X[1][112][1][1],
-                  float       Y[1][112][1][1])
+tanh_1_112_1_1 (const float X[1][112][1][1],
+                float       Y[1][112][1][1])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 112; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		Y[0][i][0][0] = tanhf(X[0][i][0][0]);
 	}
 }
 
 LIB_HIDDEN void
-func_59e9f807f4c (const float input[1][448][28][28],
-                  float       output[1][448][1][1])
+avgpool_1_448_28_28 (const float in[1][448][28][28],
+                     float       out[1][448][1][1])
 {
 	/* GlobalAveragePool */
-	for (int32_t b = 0; b < 1; b++) {
-		for (int32_t c = 0; c < 448; c++) {
-			float dimsum = 0.00000f;
-			for (int32_t d0 = 0; d0 < 28; d0++) {
-				for (int32_t d1 = 0; d1 < 28; d1++) {
-					dimsum += input[b][c][d0][d1];
-				}
+	for (unsigned c = 0; c < sizeof in[0] / sizeof in[0][0]; c++) {
+		float dimsum = 0.0f;
+		for (unsigned d0 = 0; d0 < sizeof in[0][0] / sizeof in[0][0][0]; d0++) {
+			for (unsigned d1 = 0; d1 < sizeof in[0][0][0] / sizeof in[0][0][0][0]; d1++) {
+				dimsum += in[0][c][d0][d1];
 			}
-			output[b][c][0][0] = dimsum / 784;
 		}
+		out[0][c][0][0] = dimsum / (float)((sizeof in[0][0]    / sizeof in[0][0][0]) *
+		                                   (sizeof in[0][0][0] / sizeof in[0][0][0][0]));
 	}
 }
 
@@ -885,9 +729,9 @@ func_33fbc985d50 (const float A[1][448][28][28],
 }
 
 LIB_HIDDEN void
-func_332a650925a (const float A[1][112][1][1],
-                  const float B[1],
-                  float       C[1][112][1][1])
+fold_1_112_1_1 (const float A[1][112][1][1],
+                const float B[1],
+                float       C[1][112][1][1])
 {
 	/* Mul
 	   shift_dir: NOT_GIVEN
@@ -991,20 +835,14 @@ func_a8d1ba02fec (const float x[1][168][56][56],
 }
 
 LIB_HIDDEN void
-func_a78eb1ca502 (const float A[1][2016][7][7],
-                  const float B[1][2016][7][7],
-                  float       C[1][2016][7][7])
+add_1_2016_7_7 (const float A[1][2016][7][7],
+                const float B[1][2016][7][7],
+                float       C[1][2016][7][7])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 2016; i1++) {
-			for (unsigned i2 = 0; i2 < 7; i2++) {
-				for (unsigned i3 = 0; i3 < 7; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][i2][i3] + B[0][i1][i2][i3];
-				}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] + B[0][i][j][k];
 			}
 		}
 	}
@@ -1097,64 +935,56 @@ func_190bd454425 (const float x[1][448][1][1],
 }
 
 LIB_HIDDEN void
-func_ecaf0c6cbc9 (const float X[1][2016][7][7],
-                  float       Y[1][2016][7][7])
+tanh_1_2016_7_7 (const float X[1][2016][7][7],
+                 float       Y[1][2016][7][7])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 2016; i1++) {
-			for (unsigned i2 = 0; i2 < 7; i2++) {
-				for (unsigned i3 = 0; i3 < 7; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = tanhf(X[0][i][j][k]);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_c68fae9f00c (const float input[1][168][56][56],
-                  float       output[1][168][1][1])
+avgpool_1_168_56_56 (const float in[1][168][56][56],
+                     float       out[1][168][1][1])
 {
 	/* GlobalAveragePool */
-	for (int32_t b = 0; b < 1; b++) {
-		for (int32_t c = 0; c < 168; c++) {
-			float dimsum = 0.00000f;
-			for (int32_t d0 = 0; d0 < 56; d0++) {
-				for (int32_t d1 = 0; d1 < 56; d1++) {
-					dimsum += input[b][c][d0][d1];
-				}
+	for (unsigned c = 0; c < sizeof in[0] / sizeof in[0][0]; c++) {
+		float dimsum = 0.0f;
+		for (unsigned d0 = 0; d0 < sizeof in[0][0] / sizeof in[0][0][0]; d0++) {
+			for (unsigned d1 = 0; d1 < sizeof in[0][0][0] / sizeof in[0][0][0][0]; d1++) {
+				dimsum += in[0][c][d0][d1];
 			}
-			output[b][c][0][0] = dimsum / 3136;
 		}
+		out[0][c][0][0] = dimsum / (float)((sizeof in[0][0]    / sizeof in[0][0][0]) *
+		                                   (sizeof in[0][0][0] / sizeof in[0][0][0][0]));
 	}
 }
 
 LIB_HIDDEN void
-func_c559a6ca992 (const float input[1][2016][7][7],
-                  float       output[1][2016][1][1])
+avgpool_1_2016_7_7 (const float in[1][2016][7][7],
+                   float       out[1][2016][1][1])
 {
 	/* GlobalAveragePool */
-	for (int32_t b = 0; b < 1; b++) {
-		for (int32_t c = 0; c < 2016; c++) {
-			float dimsum = 0.00000f;
-			for (int32_t d0 = 0; d0 < 7; d0++) {
-				for (int32_t d1 = 0; d1 < 7; d1++) {
-					dimsum += input[b][c][d0][d1];
-				}
+	for (unsigned c = 0; c < sizeof in[0] / sizeof in[0][0]; c++) {
+		float dimsum = 0.0f;
+		for (unsigned d0 = 0; d0 < sizeof in[0][0] / sizeof in[0][0][0]; d0++) {
+			for (unsigned d1 = 0; d1 < sizeof in[0][0][0] / sizeof in[0][0][0][0]; d1++) {
+				dimsum += in[0][c][d0][d1];
 			}
-			output[b][c][0][0] = dimsum / 49;
 		}
+		out[0][c][0][0] = dimsum / (float)((sizeof in[0][0]    / sizeof in[0][0][0]) *
+		                                   (sizeof in[0][0][0] / sizeof in[0][0][0][0]));
 	}
 }
 
 LIB_HIDDEN void
-func_b7ec17f0ea3 (const float A[1][2016][7][7],
-                  const float B[1],
-                  float       C[1][2016][7][7])
+fold_1_2016_7_7 (const float A[1][2016][7][7],
+                 const float B[1],
+                 float       C[1][2016][7][7])
 {
 	/* Mul
 	   shift_dir: NOT_GIVEN
@@ -1192,19 +1022,13 @@ func_b7e2f9b2d8b (const float A[1][42][1][1],
 }
 
 LIB_HIDDEN void
-func_acf4d1c7f10 (const float X[1][2016][7][7],
-                  float       Y[1][2016][7][7])
+softplus_1_2016_7_7 (const float X[1][2016][7][7],
+                     float       Y[1][2016][7][7])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 2016; i1++) {
-			for (unsigned i2 = 0; i2 < 7; i2++) {
-				for (unsigned i3 = 0; i3 < 7; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = logf(expf(X[0][i][j][k]) + 1.0f);
 			}
 		}
 	}
@@ -1238,14 +1062,8 @@ func_8e83ce12053 (const float X[1][42][1][1],
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 42; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
-			}
-		}
+	for (unsigned i1 = 0; i1 < sizeof Y[0] / sizeof Y[0][0]; i1++) {
+		Y[0][i1][0][0] = 1.0f / (1.0f + expf(-X[0][i1][0][0]));
 	}
 }
 
@@ -1270,47 +1088,27 @@ func_673643b7d31 (const float A[1][168][56][56],
 }
 
 LIB_HIDDEN void
-func_5e628592137 (const float X[1][42][1][1],
-                  float       Y[1][42][1][1])
+softplus_1_42_1_1 (const float X[1][42][1][1],
+                   float       Y[1][42][1][1])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 42; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		Y[0][i][0][0] = logf(expf(X[0][i][0][0]) + 1.0f);
 	}
 }
 
 LIB_HIDDEN void
-func_4d9b72c9e07 (const float X[1][42][1][1],
-                  float       Y[1][42][1][1])
+tanh_1_42_1_1 (const float X[1][42][1][1],
+               float       Y[1][42][1][1])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 42; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		Y[0][i][0][0] = tanhf(X[0][i][0][0]);
 	}
 }
 
 LIB_HIDDEN void
-func_2c5bf9e3ffd (const float A[1][42][1][1],
-                  const float B[1],
-                  float       C[1][42][1][1])
+fold_1_42_1_1 (const float A[1][42][1][1],
+               const float B[1],
+               float       C[1][42][1][1])
 {
 	/* Mul
 	   shift_dir: NOT_GIVEN
@@ -1328,41 +1126,29 @@ func_2c5bf9e3ffd (const float A[1][42][1][1],
 }
 
 LIB_HIDDEN void
-func_1d00fb8936f (const float X[1][2016][7][7],
-                  float       Y[1][2016][7][7])
+sigmoid_1_2016_7_7 (const float X[1][2016][7][7],
+                    float       Y[1][2016][7][7])
 {
 	/* Sigmoid
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 2016; i1++) {
-			for (unsigned i2 = 0; i2 < 7; i2++) {
-				for (unsigned i3 = 0; i3 < 7; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
+	for (unsigned i = 0; i < sizeof Y[0] / sizeof Y[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof Y[0][0] / sizeof Y[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof Y[0][0][0] / sizeof Y[0][0][0][0]; k++) {
+				Y[0][i][j][k] = 1.0f / (1.0f + expf(-X[0][i][j][k]));
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_0de55b2c296 (const float A[1][42][1][1],
-                  const float B[1][42][1][1],
-                  float       C[1][42][1][1])
+add_1_42_1_1 (const float A[1][42][1][1],
+              const float B[1][42][1][1],
+              float       C[1][42][1][1])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 42; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][0][0] + B[0][i1][0][0];
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		C[0][i][0][0] = A[0][i][0][0] + B[0][i][0][0];
 	}
 }
 
@@ -1374,52 +1160,30 @@ func_0396437e541 (const float X[1][168][1][1],
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 168; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof Y[0] / sizeof Y[0][0]; i++) {
+		Y[0][i][0][0] = 1.0f / (1.0f + expf(-X[0][i][0][0]));
 	}
 }
 
 LIB_HIDDEN void
-func_fe798c4b643 (const float X[1][8][1][1],
+softplus_1_8_1_1 (const float X[1][8][1][1],
                   float       Y[1][8][1][1])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 8; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		Y[0][i][0][0] = logf(expf(X[0][i][0][0]) + 1.0f);
 	}
 }
 
 LIB_HIDDEN void
-func_fa86f63a389 (const float X[1][8][1][1],
-                  float       Y[1][8][1][1])
+sigmoid_1_8_1_1 (const float X[1][8][1][1],
+                 float       Y[1][8][1][1])
 {
 	/* Sigmoid
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 8; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof Y[0] / sizeof Y[0][0]; i++) {
+		Y[0][i][0][0] = 1.0f / (1.0f + expf(-X[0][i][0][0]));
 	}
 }
 
@@ -1529,33 +1293,27 @@ func_e98ea15dc69 (const float X[1][896][28][28],
 }
 
 LIB_HIDDEN void
-func_e5bf4246f71 (const float A[1][2016],
-                  const float B[2016][4],
-                  float       Y[1][4])
+matmul_2016_4 (const float A[1][2016],
+               const float B[2016][4],
+               float       Y[1][4])
 {
 	/* MatMul */
-	for (uint32_t r = 0; r < 1; r++)
-		for (uint32_t c = 0; c < 4; c++) {
-			Y[r][c] = 0;
-			for (uint32_t i = 0; i < 2016; i++)
-				Y[r][c] += A[r][i] * B[i][c];
+	for (unsigned c = 0; c < sizeof Y[0] / sizeof Y[0][0]; c++) {
+		Y[0][c] = 0;
+		for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+			Y[0][c] += A[0][i] * B[i][c];
 		}
+	}
 }
 
 LIB_HIDDEN void
-func_dbe8eb58c75 (const float X[1][2016][14][14],
-                  float       Y[1][2016][14][14])
+softplus_1_2016_14_14 (const float X[1][2016][14][14],
+                       float       Y[1][2016][14][14])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 2016; i1++) {
-			for (unsigned i2 = 0; i2 < 14; i2++) {
-				for (unsigned i3 = 0; i3 < 14; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = logf(expf(X[0][i][j][k]) + 1.0f);
 			}
 		}
 	}
@@ -1601,9 +1359,9 @@ func_d6ae3647f1b (const float A[1][168][112][112],
 }
 
 LIB_HIDDEN void
-func_d6a45ad4f82 (const float A[1][32][112][112],
-                  const float B[1],
-                  float       C[1][32][112][112])
+fold_1_32_112_112 (const float A[1][32][112][112],
+                   const float B[1],
+                   float       C[1][32][112][112])
 {
 	/* Mul
 	   shift_dir: NOT_GIVEN
@@ -1750,44 +1508,43 @@ func_c6af25897cd (const float x[1][448][28][28],
 }
 
 LIB_HIDDEN void
-func_c686cecec96 (const float X[1][2016][14][14],
-                  float       Y[1][2016][14][14])
+tanh_1_2016_14_14 (const float X[1][2016][14][14],
+                   float       Y[1][2016][14][14])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 2016; i1++) {
-			for (unsigned i2 = 0; i2 < 14; i2++) {
-				for (unsigned i3 = 0; i3 < 14; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = tanhf(X[0][i][j][k]);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_c3376a8404c (const float input[1][4],
-                  float       output[1][4])
+softmax_1_4 (const float in[1][4],
+             float       out[1][4])
 {
 	/* Softmax 13 (TF, pytorch style)
 	 * axis = -1
 	 */
-	for (uint32_t i0 = 0; i0 < 1; i0++) {
-		float max = -INFINITY;
-		for (uint32_t i1 = 0; i1 < 4; i1++) {
-			max = max > input[i0][i1] ? max : input[i0][i1];
-		}
-		float sum = 0.00000;
-		for (uint32_t i1 = 0; i1 < 4; i1++) {
-			sum += expf(input[i0][i1] - max);
-		}
-		for (uint32_t i1 = 0; i1 < 4; i1++) {
-			output[i0][i1] = expf(input[i0][i1] - max) / sum;
-		}
+	float max  = in[0][0];
+	unsigned i = 0;
+	while (++i < sizeof in[0] / sizeof in[0][0]) {
+		if (in[0][i] > max)
+			max = in[0][i];
 	}
+
+	float sum = expf(in[0][0] - max);
+	out[0][0] = sum;
+	i = 0;
+	while (++i < sizeof in[0] / sizeof in[0][0]) {
+		sum += (out[0][i] = expf(in[0][i] - max));
+	}
+
+	i = 0;
+	do {
+		out[0][i] /= sum;
+	} while (++i < sizeof in[0] / sizeof in[0][0]);
 }
 
 LIB_HIDDEN void
@@ -1854,10 +1611,10 @@ func_c288fe43fe8 (const float x[1][168][56][56],
 }
 
 LIB_HIDDEN void
-func_bf5ddeae394 (const float x[1][112][1][1],
-                  const float w[896][112][1][1],
-                  const float bias[896],
-                  float       y[1][896][1][1])
+conv_1_112_1_1 (const float x[1][112][1][1],
+                const float w[896][112][1][1],
+                const float bias[896],
+                float       y[1][896][1][1])
 {
 	/* Conv
 	 *
@@ -1868,55 +1625,47 @@ func_bf5ddeae394 (const float x[1][112][1][1],
 	 * pads: 0 0 0 0
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		for (uint32_t m = 0; m < 896; m++) {
-			for (int32_t o0 = 0, i0 = 0; o0 < 1; o0++, i0 += 1) {
-				for (int32_t o1 = 0, i1 = 0; o1 < 1; o1++, i1 += 1) {
-					y[b][m][o0][o1] = bias[m];
-					for (int32_t c = 0; c < 112; c++) {
-						for (uint32_t k0 = 0; k0 < 1; k0++) {
-							for (uint32_t k1 = 0; k1 < 1; k1++) {
-								int ii0 = i0 + k0 * 1;
-								if (ii0 < 0)
-									continue;
-								if (ii0 >= 1)
-									continue;
-								int ii1 = i1 + k1 * 1;
-								if (ii1 < 0)
-									continue;
-								if (ii1 >= 1)
-									continue;
-								y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c][k0][k1];
-							} /* k */
-						}         /* k */
-					}                 /* c */
-				}                         /* o */
-			}                                 /* o */
-		}                                         /* m */
-	}                                                 /* b */
+	for (int m = 0; m < 896; m++) {
+		for (int o0 = 0, i0 = 0; o0 < 1; o0++, i0 += 1) {
+			for (int o1 = 0, i1 = 0; o1 < 1; o1++, i1 += 1) {
+				y[0][m][o0][o1] = bias[m];
+				for (int c = 0; c < 112; c++) {
+					for (int k0 = 0; k0 < 1; k0++) {
+						for (int k1 = 0; k1 < 1; k1++) {
+							int ii0 = i0 + k0 * 1;
+							if (ii0 < 0)
+								continue;
+						if (ii0 >= 1)
+								continue;
+							int ii1 = i1 + k1 * 1;
+							if (ii1 < 0)
+								continue;
+							if (ii1 >= 1)
+								continue;
+							y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c][k0][k1];
+						} /* k */
+					}         /* k */
+				}                 /* c */
+			}                         /* o */
+		}                                 /* o */
+	}                                         /* m */
 }
 
 LIB_HIDDEN void
-func_bddbd765d81 (const float X[1][448][56][56],
-                  float       Y[1][448][56][56])
+softplus_1_448_56_56 (const float X[1][448][56][56],
+                      float       Y[1][448][56][56])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 448; i1++) {
-			for (unsigned i2 = 0; i2 < 56; i2++) {
-				for (unsigned i3 = 0; i3 < 56; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = logf(expf(X[0][i][j][k]) + 1.0f);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_bbf546ba220 (const float x[1][896][14][14],
+conv_1_896_14_14 (const float x[1][896][14][14],
                   const float w[2016][896][1][1],
                   const float bias[2016],
                   float       y[1][2016][7][7])
@@ -1930,38 +1679,36 @@ func_bbf546ba220 (const float x[1][896][14][14],
 	 * pads: 0 0 0 0
 	 * strides: 2 2
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		for (uint32_t m = 0; m < 2016; m++) {
-			for (int32_t o0 = 0, i0 = 0; o0 < 7; o0++, i0 += 2) {
-				for (int32_t o1 = 0, i1 = 0; o1 < 7; o1++, i1 += 2) {
-					y[b][m][o0][o1] = bias[m];
-					for (int32_t c = 0; c < 896; c++) {
-						for (uint32_t k0 = 0; k0 < 1; k0++) {
-							for (uint32_t k1 = 0; k1 < 1; k1++) {
-								int ii0 = i0 + k0 * 1;
-								if (ii0 < 0)
-									continue;
-								if (ii0 >= 14)
-									continue;
-								int ii1 = i1 + k1 * 1;
-								if (ii1 < 0)
-									continue;
-								if (ii1 >= 14)
-									continue;
-								y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c][k0][k1];
-							} /* k */
-						}         /* k */
-					}                 /* c */
-				}                         /* o */
-			}                                 /* o */
-		}                                         /* m */
-	}                                                 /* b */
+	for (int m = 0; m < 2016; m++) {
+		for (int o0 = 0, i0 = 0; o0 < 7; o0++, i0 += 2) {
+			for (int o1 = 0, i1 = 0; o1 < 7; o1++, i1 += 2) {
+				y[0][m][o0][o1] = bias[m];
+				for (int c = 0; c < 896; c++) {
+					for (int k0 = 0; k0 < 1; k0++) {
+						for (int k1 = 0; k1 < 1; k1++) {
+							int ii0 = i0 + k0 * 1;
+							if (ii0 < 0)
+								continue;
+							if (ii0 >= 14)
+								continue;
+							int ii1 = i1 + k1 * 1;
+							if (ii1 < 0)
+								continue;
+							if (ii1 >= 14)
+								continue;
+							y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c][k0][k1];
+						} /* k */
+					}         /* k */
+				}                 /* c */
+			}                         /* o */
+		}                                 /* o */
+	}                                         /* m */
 }
 
 LIB_HIDDEN void
-func_bb3233bbb31 (const float A[1][2016][14][14],
-                  const float B[1],
-                  float       C[1][2016][14][14])
+fold_1_2016_14_14 (const float A[1][2016][14][14],
+                   const float B[1],
+                   float       C[1][2016][14][14])
 {
 	/* Mul
 	   shift_dir: NOT_GIVEN
@@ -1979,7 +1726,7 @@ func_bb3233bbb31 (const float A[1][2016][14][14],
 }
 
 LIB_HIDDEN void
-func_b474dc19b0a (const float A[1][896][28][28],
+fold_1_896_28_28 (const float A[1][896][28][28],
                   const float B[1],
                   float       C[1][896][28][28])
 {
@@ -1999,92 +1746,62 @@ func_b474dc19b0a (const float A[1][896][28][28],
 }
 
 LIB_HIDDEN void
-func_ad146f9f484 (const float X[1][896][28][28],
+softplus_1_896_28_28 (const float X[1][896][28][28],
+                      float       Y[1][896][28][28])
+{
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = logf(expf(X[0][i][j][k]) + 1.0f);
+			}
+		}
+	}
+}
+
+LIB_HIDDEN void
+tanh_1_896_28_28 (const float X[1][896][28][28],
                   float       Y[1][896][28][28])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 896; i1++) {
-			for (unsigned i2 = 0; i2 < 28; i2++) {
-				for (unsigned i3 = 0; i3 < 28; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = tanhf(X[0][i][j][k]);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_aad79a6baee (const float X[1][896][28][28],
-                  float       Y[1][896][28][28])
+add_1_4 (const float A[1][4],
+         const float B[4],
+         float       C[1][4])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 896; i1++) {
-			for (unsigned i2 = 0; i2 < 28; i2++) {
-				for (unsigned i3 = 0; i3 < 28; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		C[0][i] = A[0][i] + B[i];
+	}
+}
+
+LIB_HIDDEN void
+tanh_1_168_112_112 (const float X[1][168][112][112],
+                    float       Y[1][168][112][112])
+{
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = tanhf(X[0][i][j][k]);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_a4ec7eed693 (const float A[1][4],
-                  const float B[4],
-                  float       C[1][4])
+softplus_1_32_112_112 (const float X[1][32][112][112],
+                       float       Y[1][32][112][112])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 4; i1++) {
-			C[i0][i1] = A[0][i1] + B[i1];
-		}
-	}
-}
-
-LIB_HIDDEN void
-func_a3aa399a41b (const float X[1][168][112][112],
-                  float       Y[1][168][112][112])
-{
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 168; i1++) {
-			for (unsigned i2 = 0; i2 < 112; i2++) {
-				for (unsigned i3 = 0; i3 < 112; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
-			}
-		}
-	}
-}
-
-LIB_HIDDEN void
-func_a0025ec8222 (const float X[1][32][112][112],
-                  float       Y[1][32][112][112])
-{
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 32; i1++) {
-			for (unsigned i2 = 0; i2 < 112; i2++) {
-				for (unsigned i3 = 0; i3 < 112; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = logf(expf(X[0][i][j][k]) + 1.0f);
 			}
 		}
 	}
@@ -2153,30 +1870,24 @@ func_97b144c3b9a (const float X[1][168][112][112],
 }
 
 LIB_HIDDEN void
-func_97397a824fd (const float A[1][168][112][112],
-                  const float B[1][168][112][112],
-                  float       C[1][168][112][112])
+add_1_168_112_112 (const float A[1][168][112][112],
+                   const float B[1][168][112][112],
+                   float       C[1][168][112][112])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 168; i1++) {
-			for (unsigned i2 = 0; i2 < 112; i2++) {
-				for (unsigned i3 = 0; i3 < 112; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][i2][i3] + B[0][i1][i2][i3];
-				}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] + B[0][i][j][k];
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_9225134875f (const float x[1][896][14][14],
-                  const float w[2016][896][1][1],
-                  const float bias[2016],
-                  float       y[1][2016][14][14])
+conv_1_896_14_14_w2016_896_1_1_y1_2016_14_14 (const float x[1][896][14][14],
+                                              const float w[2016][896][1][1],
+                                              const float bias[2016],
+                                              float       y[1][2016][14][14])
 {
 	/* Conv
 	 *
@@ -2187,32 +1898,16 @@ func_9225134875f (const float x[1][896][14][14],
 	 * pads: 0 0 0 0
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		for (uint32_t m = 0; m < 2016; m++) {
-			for (int32_t o0 = 0, i0 = 0; o0 < 14; o0++, i0 += 1) {
-				for (int32_t o1 = 0, i1 = 0; o1 < 14; o1++, i1 += 1) {
-					y[b][m][o0][o1] = bias[m];
-					for (int32_t c = 0; c < 896; c++) {
-						for (uint32_t k0 = 0; k0 < 1; k0++) {
-							for (uint32_t k1 = 0; k1 < 1; k1++) {
-								int ii0 = i0 + k0 * 1;
-								if (ii0 < 0)
-									continue;
-								if (ii0 >= 14)
-									continue;
-								int ii1 = i1 + k1 * 1;
-								if (ii1 < 0)
-									continue;
-								if (ii1 >= 14)
-									continue;
-								y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c][k0][k1];
-							} /* k */
-						}         /* k */
-					}                 /* c */
-				}                         /* o */
-			}                                 /* o */
-		}                                         /* m */
-	}                                                 /* b */
+	for (unsigned m = 0; m < sizeof y[0] / sizeof y[0][0]; m++) {
+		for (int o0 = 0; o0 < 14; o0++) {
+			for (int o1 = 0; o1 < 14; o1++) {
+				y[0][m][o0][o1] = bias[m];
+				for (int c = 0; c < 896; c++) {
+					y[0][m][o0][o1] += x[0][c][o0][o1] * w[m][c][0][0];
+				} /* c */
+			}         /* o */
+		}                 /* o */
+	}                         /* m */
 }
 
 LIB_HIDDEN void
@@ -2302,10 +1997,10 @@ func_8d7ee594121 (const float x[1][448][28][28],
 }
 
 LIB_HIDDEN void
-func_8938578e140 (const float x[1][224][1][1],
-                  const float w[2016][224][1][1],
-                  const float bias[2016],
-                  float       y[1][2016][1][1])
+conv_1_224_1_1_w2016_224_1_1_y1_2016_1_1 (const float x[1][224][1][1],
+                                          const float w[2016][224][1][1],
+                                          const float bias[2016],
+                                          float       y[1][2016][1][1])
 {
 	/* Conv
 	 *
@@ -2316,39 +2011,19 @@ func_8938578e140 (const float x[1][224][1][1],
 	 * pads: 0 0 0 0
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		for (uint32_t m = 0; m < 2016; m++) {
-			for (int32_t o0 = 0, i0 = 0; o0 < 1; o0++, i0 += 1) {
-				for (int32_t o1 = 0, i1 = 0; o1 < 1; o1++, i1 += 1) {
-					y[b][m][o0][o1] = bias[m];
-					for (int32_t c = 0; c < 224; c++) {
-						for (uint32_t k0 = 0; k0 < 1; k0++) {
-							for (uint32_t k1 = 0; k1 < 1; k1++) {
-								int ii0 = i0 + k0 * 1;
-								if (ii0 < 0)
-									continue;
-								if (ii0 >= 1)
-									continue;
-								int ii1 = i1 + k1 * 1;
-								if (ii1 < 0)
-									continue;
-								if (ii1 >= 1)
-									continue;
-								y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c][k0][k1];
-							} /* k */
-						}         /* k */
-					}                 /* c */
-				}                         /* o */
-			}                                 /* o */
-		}                                         /* m */
-	}                                                 /* b */
+	for (unsigned m = 0; m < sizeof y[0] / sizeof y[0][0]; m++) {
+		y[0][m][0][0] = bias[m];
+		for (int c = 0; c < 224; c++) {
+			y[0][m][0][0] += x[0][c][0][0] * w[m][c][0][0];
+		} /* c */
+	}         /* m */
 }
 
 LIB_HIDDEN void
-func_831ce77435a (const float x[1][896][1][1],
-                  const float w[112][896][1][1],
-                  const float bias[112],
-                  float       y[1][112][1][1])
+conv_1_896_1_1_w112_896_1_1_y1_112_1_1 (const float x[1][896][1][1],
+                                        const float w[112][896][1][1],
+                                        const float bias[112],
+                                        float       y[1][112][1][1])
 {
 	/* Conv
 	 *
@@ -2359,32 +2034,12 @@ func_831ce77435a (const float x[1][896][1][1],
 	 * pads: 0 0 0 0
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		for (uint32_t m = 0; m < 112; m++) {
-			for (int32_t o0 = 0, i0 = 0; o0 < 1; o0++, i0 += 1) {
-				for (int32_t o1 = 0, i1 = 0; o1 < 1; o1++, i1 += 1) {
-					y[b][m][o0][o1] = bias[m];
-					for (int32_t c = 0; c < 896; c++) {
-						for (uint32_t k0 = 0; k0 < 1; k0++) {
-							for (uint32_t k1 = 0; k1 < 1; k1++) {
-								int ii0 = i0 + k0 * 1;
-								if (ii0 < 0)
-									continue;
-								if (ii0 >= 1)
-									continue;
-								int ii1 = i1 + k1 * 1;
-								if (ii1 < 0)
-									continue;
-								if (ii1 >= 1)
-									continue;
-								y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c][k0][k1];
-							} /* k */
-						}         /* k */
-					}                 /* c */
-				}                         /* o */
-			}                                 /* o */
-		}                                         /* m */
-	}                                                 /* b */
+	for (unsigned m = 0; m < sizeof y[0] / sizeof y[0][0]; m++) {
+		y[0][m][0][0] = bias[m];
+		for (int c = 0; c < 896; c++) {
+			y[0][m][0][0] += x[0][c][0][0] * w[m][c][0][0];
+		} /* c */
+	}         /* m */
 }
 
 LIB_HIDDEN void
@@ -2481,12 +2136,10 @@ func_74f52a68cb0 (const float X[1][32][112][112],
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 32; i1++) {
-			for (unsigned i2 = 0; i2 < 112; i2++) {
-				for (unsigned i3 = 0; i3 < 112; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
+	for (unsigned i1 = 0; i1 < 32; i1++) {
+		for (unsigned i2 = 0; i2 < 112; i2++) {
+			for (unsigned i3 = 0; i3 < 112; i3++) {
+				Y[0][i1][i2][i3] = 1 / (1 + expf(-X[0][i1][i2][i3]));
 			}
 		}
 	}
@@ -2555,58 +2208,40 @@ func_6ba9e121261 (const float x[1][42][1][1],
 }
 
 LIB_HIDDEN void
-func_6a61f6e44a9 (const float X[1][2016][1][1],
-                  float       Y[1][2016][1][1])
+sigmoid_1_2016_1_1 (const float X[1][2016][1][1],
+                    float       Y[1][2016][1][1])
 {
 	/* Sigmoid
 	   alpha = 0.00000
 	   beta = 0.00000
 	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 2016; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = 1 / (1 + expf(-X[i0][i1][i2][i3]));
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof Y[0] / sizeof Y[0][0]; i++) {
+		Y[0][i][0][0] = 1.0f / (1.0f + expf(-X[0][i][0][0]));
 	}
 }
 
 LIB_HIDDEN void
-func_672295ba075 (const float A[1][2016][14][14],
+add_1_2016_14_14 (const float A[1][2016][14][14],
                   const float B[1][2016][14][14],
                   float       C[1][2016][14][14])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 2016; i1++) {
-			for (unsigned i2 = 0; i2 < 14; i2++) {
-				for (unsigned i3 = 0; i3 < 14; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][i2][i3] + B[0][i1][i2][i3];
-				}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] + B[0][i][j][k];
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_6500efa9237 (const float X[1][448][56][56],
+tanh_1_448_56_56 (const float X[1][448][56][56],
                   float       Y[1][448][56][56])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 448; i1++) {
-			for (unsigned i2 = 0; i2 < 56; i2++) {
-				for (unsigned i3 = 0; i3 < 56; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = tanhf(X[0][i][j][k]);
 			}
 		}
 	}
@@ -2730,10 +2365,10 @@ func_4962051e51f (const float A[1][32][112][112],
 }
 
 LIB_HIDDEN void
-func_4918c40384e (const float x[1][32][112][112],
-                  const float w[168][32][1][1],
-                  const float bias[168],
-                  float       y[1][168][112][112])
+conv_1_32_112_112_w168_32_1_1_y1_168_112_112 (const float x[1][32][112][112],
+                                              const float w[168][32][1][1],
+                                              const float bias[168],
+                                              float       y[1][168][112][112])
 {
 	/* Conv
 	 *
@@ -2744,110 +2379,66 @@ func_4918c40384e (const float x[1][32][112][112],
 	 * pads: 0 0 0 0
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		for (uint32_t m = 0; m < 168; m++) {
-			for (int32_t o0 = 0, i0 = 0; o0 < 112; o0++, i0 += 1) {
-				for (int32_t o1 = 0, i1 = 0; o1 < 112; o1++, i1 += 1) {
-					y[b][m][o0][o1] = bias[m];
-					for (int32_t c = 0; c < 32; c++) {
-						for (uint32_t k0 = 0; k0 < 1; k0++) {
-							for (uint32_t k1 = 0; k1 < 1; k1++) {
-								int ii0 = i0 + k0 * 1;
-								if (ii0 < 0)
-									continue;
-								if (ii0 >= 112)
-									continue;
-								int ii1 = i1 + k1 * 1;
-								if (ii1 < 0)
-									continue;
-								if (ii1 >= 112)
-									continue;
-								y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c][k0][k1];
-							} /* k */
-						}         /* k */
-					}                 /* c */
-				}                         /* o */
-			}                                 /* o */
-		}                                         /* m */
-	}                                                 /* b */
+	for (unsigned m = 0; m < sizeof y[0] / sizeof y[0][0]; m++) {
+		for (int o0 = 0; o0 < 112; o0++) {
+			for (int o1 = 0; o1 < 112; o1++) {
+				y[0][m][o0][o1] = bias[m];
+				for (int c = 0; c < 32; c++) {
+					y[0][m][o0][o1] += x[0][c][o0][o1] * w[m][c][0][0];
+				} /* c */
+			}         /* o */
+		}                 /* o */
+	}                         /* m */
 }
 
 LIB_HIDDEN void
-func_487bae3a82b (const float X[1][8][1][1],
-                  float       Y[1][8][1][1])
+tanh_1_8_1_1 (const float X[1][8][1][1],
+              float       Y[1][8][1][1])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 8; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		Y[0][i][0][0] = tanhf(X[0][i][0][0]);
 	}
 }
 
 LIB_HIDDEN void
-func_48749f29571 (const float A[1][168][112][112],
-                  const float B[1],
-                  float       C[1][168][112][112])
+fold_1_168_112_112 (const float A[1][168][112][112],
+                    const float B[1],
+                    float       C[1][168][112][112])
 {
 	/* Mul
 	   shift_dir: NOT_GIVEN
 	   fmod: 0
 	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 168; i1++) {
-			for (unsigned i2 = 0; i2 < 112; i2++) {
-				for (unsigned i3 = 0; i3 < 112; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][i2][i3] * B[0];
-				}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] * B[0];
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_47eb78ba901 (const float A[1][448][56][56],
-                  const float B[1][448][56][56],
-                  float       C[1][448][56][56])
+add_1_448_56_56 (const float A[1][448][56][56],
+                 const float B[1][448][56][56],
+                 float       C[1][448][56][56])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 448; i1++) {
-			for (unsigned i2 = 0; i2 < 56; i2++) {
-				for (unsigned i3 = 0; i3 < 56; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][i2][i3] + B[0][i1][i2][i3];
-				}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] + B[0][i][j][k];
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_418292d88f2 (const float A[1][8][1][1],
-                  const float B[1][8][1][1],
-                  float       C[1][8][1][1])
+add_1_8_1_1 (const float A[1][8][1][1],
+             const float B[1][8][1][1],
+             float       C[1][8][1][1])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 8; i1++) {
-			for (unsigned i2 = 0; i2 < 1; i2++) {
-				for (unsigned i3 = 0; i3 < 1; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][0][0] + B[0][i1][0][0];
-				}
-			}
-		}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		C[0][i][0][0] = A[0][i][0][0] + B[0][i][0][0];
 	}
 }
 
@@ -2872,20 +2463,14 @@ func_3969f380e32 (const float A[1][8][1][1],
 }
 
 LIB_HIDDEN void
-func_318badbb1e2 (const float A[1][896][28][28],
-                  const float B[1][896][28][28],
-                  float       C[1][896][28][28])
+add_1_896_28_28 (const float A[1][896][28][28],
+                 const float B[1][896][28][28],
+                 float       C[1][896][28][28])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 896; i1++) {
-			for (unsigned i2 = 0; i2 < 28; i2++) {
-				for (unsigned i3 = 0; i3 < 28; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][i2][i3] + B[0][i1][i2][i3];
-				}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] + B[0][i][j][k];
 			}
 		}
 	}
@@ -2935,10 +2520,10 @@ func_2eb9726b206 (const float x[1][448][56][56],
 }
 
 LIB_HIDDEN void
-func_2c003b9cfea (const float x[1][32][112][112],
-                  const float w[168][32][1][1],
-                  const float bias[168],
-                  float       y[1][168][56][56])
+conv_1_32_112_112_w168_32_1_1_y1_168_56_56 (const float x[1][32][112][112],
+                                            const float w[168][32][1][1],
+                                            const float bias[168],
+                                            float       y[1][168][56][56])
 {
 	/* Conv
 	 *
@@ -2949,32 +2534,16 @@ func_2c003b9cfea (const float x[1][32][112][112],
 	 * pads: 0 0 0 0
 	 * strides: 2 2
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		for (uint32_t m = 0; m < 168; m++) {
-			for (int32_t o0 = 0, i0 = 0; o0 < 56; o0++, i0 += 2) {
-				for (int32_t o1 = 0, i1 = 0; o1 < 56; o1++, i1 += 2) {
-					y[b][m][o0][o1] = bias[m];
-					for (int32_t c = 0; c < 32; c++) {
-						for (uint32_t k0 = 0; k0 < 1; k0++) {
-							for (uint32_t k1 = 0; k1 < 1; k1++) {
-								int ii0 = i0 + k0 * 1;
-								if (ii0 < 0)
-									continue;
-								if (ii0 >= 112)
-									continue;
-								int ii1 = i1 + k1 * 1;
-								if (ii1 < 0)
-									continue;
-								if (ii1 >= 112)
-									continue;
-								y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c][k0][k1];
-							} /* k */
-						}         /* k */
-					}                 /* c */
-				}                         /* o */
-			}                                 /* o */
-		}                                         /* m */
-	}                                                 /* b */
+	for (unsigned m = 0; m < sizeof y[0] / sizeof y[0][0]; m++) {
+		for (unsigned o0 = 0, i0 = 0; o0 < sizeof y[0][0] / sizeof y[0][0][0]; o0++, i0 += 2) {
+			for (unsigned o1 = 0, i1 = 0; o1 < sizeof y[0][0][0] / sizeof y[0][0][0][0]; o1++, i1 += 2) {
+				y[0][m][o0][o1] = bias[m];
+				for (unsigned c = 0; c < sizeof x[0] / sizeof x[0][0]; c++) {
+					y[0][m][o0][o1] += x[0][c][i0][i1] * w[m][c][0][0];
+				} /* c */
+			}         /* o */
+		}                 /* o */
+	}                         /* m */
 }
 
 LIB_HIDDEN void
@@ -3038,29 +2607,23 @@ func_1ea51fee924 (const float A[1][896][28][28],
 }
 
 LIB_HIDDEN void
-func_1be0e277f37 (const float A[1][32][112][112],
+add_1_32_112_112 (const float A[1][32][112][112],
                   const float B[1][32][112][112],
                   float       C[1][32][112][112])
 {
-	/* Add
-	   shift_dir: NOT_GIVEN
-	   fmod: 0
-	 */
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 32; i1++) {
-			for (unsigned i2 = 0; i2 < 112; i2++) {
-				for (unsigned i3 = 0; i3 < 112; i3++) {
-					C[i0][i1][i2][i3] = A[0][i1][i2][i3] + B[0][i1][i2][i3];
-				}
+	for (unsigned i = 0; i < sizeof A[0] / sizeof A[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof A[0][0] / sizeof A[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof A[0][0][0] / sizeof A[0][0][0][0]; k++) {
+				C[0][i][j][k] = A[0][i][j][k] + B[0][i][j][k];
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_0e5d251f79e (const float A[1][8][1][1],
-                  const float B[1],
-                  float       C[1][8][1][1])
+fold_1_8_1_1 (const float A[1][8][1][1],
+              const float B[1],
+              float       C[1][8][1][1])
 {
 	/* Mul
 	   shift_dir: NOT_GIVEN
@@ -3078,10 +2641,10 @@ func_0e5d251f79e (const float A[1][8][1][1],
 }
 
 LIB_HIDDEN void
-func_0c70b81e191 (const float x[1][2016][1][1],
-                  const float w[224][2016][1][1],
-                  const float bias[224],
-                  float       y[1][224][1][1])
+conv_1_2016_1_1 (const float x[1][2016][1][1],
+                 const float w[224][2016][1][1],
+                 const float bias[224],
+                 float       y[1][224][1][1])
 {
 	/* Conv
 	 *
@@ -3092,74 +2655,60 @@ func_0c70b81e191 (const float x[1][2016][1][1],
 	 * pads: 0 0 0 0
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		for (uint32_t m = 0; m < 224; m++) {
-			for (int32_t o0 = 0, i0 = 0; o0 < 1; o0++, i0 += 1) {
-				for (int32_t o1 = 0, i1 = 0; o1 < 1; o1++, i1 += 1) {
-					y[b][m][o0][o1] = bias[m];
-					for (int32_t c = 0; c < 2016; c++) {
-						for (uint32_t k0 = 0; k0 < 1; k0++) {
-							for (uint32_t k1 = 0; k1 < 1; k1++) {
-								int ii0 = i0 + k0 * 1;
-								if (ii0 < 0)
-									continue;
-								if (ii0 >= 1)
-									continue;
-								int ii1 = i1 + k1 * 1;
-								if (ii1 < 0)
-									continue;
-								if (ii1 >= 1)
-									continue;
-								y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c][k0][k1];
-							} /* k */
-						}         /* k */
-					}                 /* c */
-				}                         /* o */
-			}                                 /* o */
-		}                                         /* m */
-	}                                                 /* b */
+	for (int m = 0; m < 224; m++) {
+		for (int o0 = 0, i0 = 0; o0 < 1; o0++, i0 += 1) {
+			for (int o1 = 0, i1 = 0; o1 < 1; o1++, i1 += 1) {
+				y[0][m][o0][o1] = bias[m];
+				for (int c = 0; c < 2016; c++) {
+					for (int k0 = 0; k0 < 1; k0++) {
+						for (int k1 = 0; k1 < 1; k1++) {
+							int ii0 = i0 + k0 * 1;
+							if (ii0 < 0)
+								continue;
+							if (ii0 >= 1)
+								continue;
+							int ii1 = i1 + k1 * 1;
+							if (ii1 < 0)
+								continue;
+							if (ii1 >= 1)
+								continue;
+							y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c][k0][k1];
+						} /* k */
+					}         /* k */
+				}                 /* c */
+			}                         /* o */
+		}                                 /* o */
+	}                                         /* m */
 }
 
 LIB_HIDDEN void
-func_0b383856cb8 (const float X[1][168][112][112],
-                  float       Y[1][168][112][112])
+softplus_1_168_112_112 (const float X[1][168][112][112],
+                        float       Y[1][168][112][112])
 {
-	/* Softplus
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 168; i1++) {
-			for (unsigned i2 = 0; i2 < 112; i2++) {
-				for (unsigned i3 = 0; i3 < 112; i3++) {
-					Y[i0][i1][i2][i3] = logf(expf(X[i0][i1][i2][i3]) + 1);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = logf(expf(X[0][i][j][k]) + 1.0f);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_0427910412a (const float X[1][32][112][112],
-                  float       Y[1][32][112][112])
+tanh_1_32_112_112 (const float X[1][32][112][112],
+                   float       Y[1][32][112][112])
 {
-	/* Tanh
-	   alpha = 0.00000
-	   beta = 0.00000
-	*/
-	for (unsigned i0 = 0; i0 < 1; i0++) {
-		for (unsigned i1 = 0; i1 < 32; i1++) {
-			for (unsigned i2 = 0; i2 < 112; i2++) {
-				for (unsigned i3 = 0; i3 < 112; i3++) {
-					Y[i0][i1][i2][i3] = tanhf(X[i0][i1][i2][i3]);
-				}
+	for (unsigned i = 0; i < sizeof X[0] / sizeof X[0][0]; i++) {
+		for (unsigned j = 0; j < sizeof X[0][0] / sizeof X[0][0][0]; j++) {
+			for (unsigned k = 0; k < sizeof X[0][0][0] / sizeof X[0][0][0][0]; k++) {
+				Y[0][i][j][k] = tanhf(X[0][i][j][k]);
 			}
 		}
 	}
 }
 
 LIB_HIDDEN void
-func_03a4c9dab98 (const float A[1][448][56][56],
+fold_1_448_56_56 (const float A[1][448][56][56],
                   const float B[1],
                   float       C[1][448][56][56])
 {
@@ -3179,10 +2728,10 @@ func_03a4c9dab98 (const float A[1][448][56][56],
 }
 
 LIB_HIDDEN void
-func_036c1a1cf73 (const float x[1][448][1][1],
-                  const float w[42][448][1][1],
-                  const float bias[42],
-                  float       y[1][42][1][1])
+conv_1_448_1_1 (const float x[1][448][1][1],
+                const float w[42][448][1][1],
+                const float bias[42],
+                float       y[1][42][1][1])
 {
 	/* Conv
 	 *
@@ -3193,32 +2742,30 @@ func_036c1a1cf73 (const float x[1][448][1][1],
 	 * pads: 0 0 0 0
 	 * strides: 1 1
 	 */
-	for (uint32_t b = 0; b < 1; b++) {
-		for (uint32_t m = 0; m < 42; m++) {
-			for (int32_t o0 = 0, i0 = 0; o0 < 1; o0++, i0 += 1) {
-				for (int32_t o1 = 0, i1 = 0; o1 < 1; o1++, i1 += 1) {
-					y[b][m][o0][o1] = bias[m];
-					for (int32_t c = 0; c < 448; c++) {
-						for (uint32_t k0 = 0; k0 < 1; k0++) {
-							for (uint32_t k1 = 0; k1 < 1; k1++) {
-								int ii0 = i0 + k0 * 1;
-								if (ii0 < 0)
-									continue;
-								if (ii0 >= 1)
-									continue;
-								int ii1 = i1 + k1 * 1;
-								if (ii1 < 0)
-									continue;
-								if (ii1 >= 1)
-									continue;
-								y[b][m][o0][o1] += x[b][c][ii0][ii1] * w[m][c][k0][k1];
-							} /* k */
-						}         /* k */
-					}                 /* c */
-				}                         /* o */
-			}                                 /* o */
-		}                                         /* m */
-	}                                                 /* b */
+	for (int m = 0; m < 42; m++) {
+		for (int o0 = 0, i0 = 0; o0 < 1; o0++, i0 += 1) {
+			for (int o1 = 0, i1 = 0; o1 < 1; o1++, i1 += 1) {
+				y[0][m][o0][o1] = bias[m];
+				for (int c = 0; c < 448; c++) {
+					for (int k0 = 0; k0 < 1; k0++) {
+						for (int k1 = 0; k1 < 1; k1++) {
+							int ii0 = i0 + k0 * 1;
+							if (ii0 < 0)
+								continue;
+							if (ii0 >= 1)
+								continue;
+							int ii1 = i1 + k1 * 1;
+							if (ii1 < 0)
+								continue;
+							if (ii1 >= 1)
+								continue;
+							y[0][m][o0][o1] += x[0][c][ii0][ii1] * w[m][c][k0][k1];
+						} /* k */
+					}         /* k */
+				}                 /* c */
+			}                         /* o */
+		}                                 /* o */
+	}                                         /* m */
 }
 
 LIB_HIDDEN void
